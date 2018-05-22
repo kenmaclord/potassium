@@ -8,6 +8,7 @@ class PotassiumPreset extends Preset
 {
     public static function install()
     {
+        static::prepareApplication();
         static::updateComposer();
         static::updatePackages();
         static::updateMix();
@@ -27,6 +28,7 @@ class PotassiumPreset extends Preset
         static::setTestUtilities();
         static::setKernel();
         static::setControllers();
+        static::install();
     }
 
 
@@ -50,6 +52,7 @@ class PotassiumPreset extends Preset
     public static function updateComposer()
     {
         static::copyFile('', 'composer.json', base_path());
+        shell_exec("~/composer.phar update");
         //copy(__DIR__.'/stubs/composer.json', base_path('composer.json'));
     }
 
@@ -248,5 +251,106 @@ class PotassiumPreset extends Preset
         $dest = base_path($destination);
 
         shell_exec("cp -r $src $dest");
+    }
+
+
+    public static function prepareApplication()
+    {
+        $this->info('Paquets PHP installés');
+
+        $application = $this->ask("Quel est le nom de l'application ?");
+        $url = $this->ask("Quel est l'url de l'application ? (http://domaine.com:port)");
+        $database = $this->ask("Quel est le nom de la base de données à créer ?");
+
+        shell_exec('cp .env.example .env');
+        (new Dotenv(base_path()))->load(app()->environmentPath(), app()->environmentFile());
+
+        shell_exec('/Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot --execute="create database ' .$database.';"');
+        $this->info('Base de données générée');
+
+        $this->setEnvironmentValue('APP_NAME', $application);
+        $this->setEnvironmentValue('APP_URL', $url);
+
+        $this->setEnvironmentValue('DB_SOCKET', '/Applications/MAMP/tmp/mysql/mysql.sock');
+        $this->setEnvironmentValue('DB_DATABASE', $database);
+        $this->setEnvironmentValue('DB_USERNAME', 'root');
+        $this->setEnvironmentValue('DB_PASSWORD', 'root');
+
+        $this->setEnvironmentValue('MAIL_HOST', 'smtp.mailtrap.io');
+        $this->setEnvironmentValue('MAIL_PORT', '2525');
+        $this->setEnvironmentValue('MAIL_USERNAME', 'b17cc32811a9cb');
+        $this->setEnvironmentValue('MAIL_PASSWORD', '5c66a0d83de453');
+
+        $this->info("Fichier d'environnement prêt");
+    }
+
+
+    public static function install()
+    {
+        Artisan::call('key:generate');
+        $this->info('Clé générée');
+
+        shell_exec('~/composer.phar dump-autoload');
+        $this->info('Autoload régénéré');
+
+        Artisan::call('migrate');
+        $this->info('Migrations terminée');
+
+        Artisan::call('db:seed');
+        $this->info('Données insérées');
+
+        shell_exec('git init');
+        $this->info('Git initialisé');
+
+        shell_exec('npm install');
+        $this->info('Paquets Node installés');
+
+        shell_exec('./node_modules/.bin/tailwind init');
+        $this->info('Tailwind initialisé');
+
+        shell_exec('npm run dev');
+        $this->info('Assets compilés');
+    }
+
+
+    /**
+     * Insère ou modifie une valeur dans le fichier d'environnement
+     *
+     * @param  String  $envKey
+     * @param  String  $envValue
+     */
+    public function setEnvironmentValue($envKey, $envValue)
+    {
+        $envFile = app()->environmentFilePath();
+
+        $str = file_get_contents($envFile);
+
+        $split = explode("{$envKey}=", $str);
+
+        if(count($split) > 1){
+            $oldValue = $this->getEnv($envKey, $str);
+            $str = str_replace("{$envKey}={$oldValue}\n", "{$envKey}={$envValue}\n", $str);
+        }else{
+            $pass = $this->getEnv('DB_PASSWORD', $str);
+            $str = str_replace("DB_PASSWORD={$pass}\n", "DB_PASSWORD={$pass}\n{$envKey}={$envValue}\n", $str);
+        }
+
+        $fp = fopen($envFile, 'w');
+        fwrite($fp, $str);
+        fclose($fp);
+    }
+
+
+    /**
+     * Retrouve une valeur dans le fichier d'environnement
+     *
+     * @param   String  $key
+     * @param   String  $str
+     *
+     * @return  String
+     */
+    public function getEnv($key, $str)
+    {
+        return explode("\n", (explode("{$key}=", $str))[1])[0];
     }
 }
