@@ -11,19 +11,19 @@ class TraductionsTableSeeder extends Seeder
      */
     public function run()
     {
-		\DB::table('traductions')->truncate();
+        \DB::table('traductions')->truncate();
 
-	    \DB::table('traductions')->insert([
-			[
+        \DB::table('traductions')->insert([
+            [
                 'id' => 1,
-				'zone_id' => 1,
-				'key' => 'not-found'
-			],
-			[
+                'zone_id' => 1,
+                'key' => 'not-found'
+            ],
+            [
                 'id' => 2,
-				'zone_id' => 1,
-				'key' => 'back-home'
-			]
-		]);
+                'zone_id' => 1,
+                'key' => 'back-home'
+            ]
+        ]);
     }
 }

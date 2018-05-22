@@ -1,6 +1,6 @@
 <?php
 
-namespace Potassium\Preset;
+namespace Scaffolder;
 
 use Illuminate\Foundation\Console\Presets\Preset;
 
@@ -46,14 +46,14 @@ class PotassiumPreset extends Preset
 
     public static function updateComposer()
     {
-        $this->copyFile('composer.json', base_path());
+        static::copyFile('', 'composer.json', base_path());
         //copy(__DIR__.'/stubs/composer.json', base_path('composer.json'));
     }
 
 
     public static function updateMix()
     {
-        $this->copyFile('webpack.mix.js', base_path());
+        static::copyFile('', 'webpack.mix.js', base_path());
         //copy(__DIR__.'/stubs/webpack.mix.js', base_path('webpack.mix.js'));
     }
 
@@ -73,14 +73,14 @@ class PotassiumPreset extends Preset
             "UploadStrategyCommand.php"
         ];
 
-        // $this->copyFile('commands/Install.php', base_path('app/Console/Commands'));
-        // $this->copyFile('commands/NamingStrategyCommand.php', base_path('app/Console/Commands'));
-        // $this->copyFile('commands/Prepare.php', base_path('app/Console/Commands'));
-        // $this->copyFile('commands/PublishabilityStrategyCommand.php', base_path('app/Console/Commands'));
-        // $this->copyFile('commands/UploadStrategyCommand.php', base_path('app/Console/Commands'));
+        // static::copyFile('commands/Install.php', base_path('app/Console/Commands'));
+        // static::copyFile('commands/NamingStrategyCommand.php', base_path('app/Console/Commands'));
+        // static::copyFile('commands/Prepare.php', base_path('app/Console/Commands'));
+        // static::copyFile('commands/PublishabilityStrategyCommand.php', base_path('app/Console/Commands'));
+        // static::copyFile('commands/UploadStrategyCommand.php', base_path('app/Console/Commands'));
 
         foreach ($files as $file) {
-            $this->copyFile("commands/{$file}", base_path('app/Console/Commands'));
+            static::copyFile("commands", $file, base_path('app/Console/Commands'));
         }
 
 
@@ -105,9 +105,9 @@ class PotassiumPreset extends Preset
         //     mkdir(resource_path('stubs'));
         // }
 
-        $this->copyFile('commandStubs/naming.stub', resource_path('stubs'));
-        $this->copyFile('commandStubs/publishable.stub', resource_path('stubs'));
-        $this->copyFile('commandStubs/uploadable.stub', resource_path('stubs'));
+        static::copyFile('commandStubs', 'naming.stub', resource_path('stubs'));
+        static::copyFile('commandStubs', 'publishable.stub', resource_path('stubs'));
+        static::copyFile('commandStubs', 'uploadable.stub', resource_path('stubs'));
 
         // copy(__DIR__.'/stubs/commandStubs/naming.stub', resource_path('stubs/naming.stub'));
         // copy(__DIR__.'/stubs/commandStubs/publishable.stub', resource_path('stubs/publishable.stub'));
@@ -135,7 +135,7 @@ class PotassiumPreset extends Preset
 
     public static function setConfigFiles()
     {
-        $this->copyFile('laravellocalization.php', base_path('config'));
+        static::copyFile('', 'laravellocalization.php', base_path('config'));
         // copy(__DIR__.'/stubs/laravellocalization.php', resource_path('stubs/laravellocalization.php'));
     }
 
@@ -153,10 +153,10 @@ class PotassiumPreset extends Preset
 
     public static function setProviders()
     {
-        $this->copyFile('Providers/AppServiceProvider.php', base_path('app/Providers'));
-        $this->copyFile('Providers/AuthServiceProvider.php', base_path('app/Providers'));
-        $this->copyFile('Providers/ConfigServiceProvider.php', base_path('app/Providers'));
-        $this->copyFile('Providers/EventServiceProvider.php', base_path('app/Providers'));
+        static::copyFile('Providers', 'AppServiceProvider.php', base_path('app/Providers'));
+        static::copyFile('Providers', 'AuthServiceProvider.php', base_path('app/Providers'));
+        static::copyFile('Providers', 'ConfigServiceProvider.php', base_path('app/Providers'));
+        static::copyFile('Providers', 'EventServiceProvider.php', base_path('app/Providers'));
         // copy(__DIR__.'/stubs/Providers/AppServiceProvider.php', base_path('app/Providers/AppServiceProvider.php'));
         // copy(__DIR__.'/stubs/Providers/AuthServiceProvider.php', base_path('app/Providers/AuthServiceProvider.php'));
         // copy(__DIR__.'/stubs/Providers/ConfigServiceProvider.php', base_path('app/Providers/ConfigServiceProvider.php'));
@@ -170,15 +170,15 @@ class PotassiumPreset extends Preset
 
     public static function setLangFile()
     {
-        $this->copyFile('lang/fr/application.php', resource_path('lang/fr'));
-        $this->copyFile('lang/en/application.php', resource_path('lang/en'));
+        static::copyFile('lang/fr', 'application.php', resource_path('lang/fr'));
+        static::copyFile('lang/en', 'application.php', resource_path('lang/en'));
         // copy(__DIR__.'/stubs/lang/fr/application.php', resource_path('lang/fr/application.php'));
         // copy(__DIR__.'/stubs/lang/en/application.php', resource_path('lang/en/application.php'));
     }
 
     public static function setRoutes()
     {
-        $this->copyFile('web.php', base_path('routes'));
+        static::copyFile('', 'web.php', base_path('routes'));
         // copy(__DIR__.'/stubs/web.php', base_path('routes/web.php'));
     }
 
@@ -198,15 +198,17 @@ class PotassiumPreset extends Preset
      *
      * @return  Void
      */
-    public static function copyFile($file, $destFolder, $newName=null)
+    public static function copyFile($srcFolder, $file, $destFolder, $newName=null)
     {
-        $srcFolder=__DIR__.'/stubs/';
+        $baseFolder = __DIR__."/stubs/{$srcFolder}";
 
         if (!file_exists($destFolder)) {
             mkdir($destFolder);
         }
 
-        copy("{$scrFolder}/{$file}", {$destFolder}/{$newName ?: $file});
+        $newName = $newName ?: $file;
+
+        copy("{$baseFolder}/{$file}", "{$destFolder}/{$newName}");
     }
 
 

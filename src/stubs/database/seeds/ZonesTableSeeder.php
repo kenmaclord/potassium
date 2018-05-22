@@ -11,14 +11,14 @@ class ZonesTableSeeder extends Seeder
      */
     public function run()
     {
-		\DB::table('zones')->truncate();
+        \DB::table('zones')->truncate();
 
-	    \DB::table('zones')->insert([
-			[
+        \DB::table('zones')->insert([
+            [
                 'id' => 1,
-                'nom' => 'Application'
-				'slug' => 'application'
-			]
-		]);
+                'nom' => 'Application',
+                'slug' => 'application'
+            ]
+        ]);
     }
 }

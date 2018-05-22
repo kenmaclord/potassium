@@ -4,21 +4,12 @@
 |--------------------------------------------------------------------------
 |
 */
-@font-face{ @include font-face(absara-thin);}
-@font-face{ @include font-face(absara-thin-italic);}
-@font-face{ @include font-face(absara-regular);}
-@font-face{ @include font-face(absara-italic);}
-@font-face{ @include font-face(absara-bold);}
-@font-face{ @include font-face(absara-bold-italic);}
-
-@font-face{ @include font-face(dinLight);}
-@font-face{ @include font-face(dinMedium);}
-@font-face{ @include font-face(dinBold);}
-@font-face{ @include font-face(dinRegular);}
-
-@font-face{ @include font-face(PFDinTextStd-Bold);}
-@font-face{ @include font-face(PFDinTextStd-ExtraBlack);}
-@font-face{ @include font-face(PFDinTextStd-Regular);}
+// @font-face{ @include font-face(absara-thin);}
+// @font-face{ @include font-face(absara-thin-italic);}
+// @font-face{ @include font-face(absara-regular);}
+// @font-face{ @include font-face(absara-italic);}
+// @font-face{ @include font-face(absara-bold);}
+// @font-face{ @include font-face(absara-bold-italic);}
 
 
 /*
@@ -63,48 +54,6 @@
     @extend %reset-font;
 }
 
-
-/*
-|-----------------
-| Police Din
-|-----------------
-*/
-.din-light{
-    font-family: "dinLight", "PFDinTextStd-Regular", "Arial", sans-serif;
-}
-
-.din-regular{
-    font-family: "PFDinTextStd-Regular", "Arial", sans-serif;
-}
-
-.din-bold{
-    font-family: "PFDinTextStd-Bold", "Arial Bold", sans-serif;
-}
-
-.din-black{
-    font-family: "PFDinTextStd-ExtraBlack", "Arial Black", sans-serif;
-}
-
-/*
-|--------------------------------------------------------------------------
-| Titres
-|--------------------------------------------------------------------------
-*/
-.titre-regular{
-    @extend .din-regular;
-    @extend %titre;
-}
-
-.titre-bold{
-    @extend .din-bold;
-    @extend %titre;
-}
-
-.titre-black{
-    @extend .din-black;
-    @extend %titre;
-}
-
 /*
 |--------------------------------------------------------------------------
 | Styles partagés
@@ -126,17 +75,4 @@
     font-weight: normal;
     font-style: normal;
 }
-
-%titre{
-    @extend %reset-font;
-    @extend .cap;
-}
-
-%chapeau{
-    @extend .titre-black;
-    @extend .black;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-}
-
 

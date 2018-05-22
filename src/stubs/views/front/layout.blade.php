@@ -40,7 +40,7 @@
 	<div id="front" v-cloak>
 		<transition appear name="fade" mode="out-in">
 			<div>
-				<component :is="{{$component}}" data="{{$data or ''}}" inline-template>
+				<component is="{{$component}}" data="{{$data or ''}}" inline-template>
 					<div class="content front">
 						@yield('content')
 					</div>

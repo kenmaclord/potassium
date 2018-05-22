@@ -1,5 +1,4 @@
     /* Initialisation de l'application */
-@import "../core/reset";
 @import "app/variables";
 @import "node_modules/bulma/bulma";
 @import "../core/font-awesome/font-awesome.scss";
@@ -13,12 +12,8 @@
 |--------------------------------------------------------------------------
 */
 @import "app/app";
-@import "app/menu";
-@import "app/hamburger";
 @import "app/header";
 @import "app/footer";
-@import "app/pages";
-@import "app/input-square";
 
 
 /*
@@ -27,17 +22,3 @@
 |--------------------------------------------------------------------------
 */
 @import "pages/home";
-@import "pages/news";
-@import "pages/newsElement";
-@import "pages/filtres";
-@import "pages/collection";
-@import "pages/collections";
-@import "pages/designers";
-@import "pages/designer";
-@import "pages/modele/modele";
-@import "pages/modele/accessoires";
-@import "pages/modele/configurateur";
-@import "pages/telechargements";
-@import "pages/telechargements_types";
-@import "pages/contact";
-@import "pages/mentions";
