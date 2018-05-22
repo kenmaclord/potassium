@@ -1,0 +1,71 @@
+$space: 3px;
+$border-width: 3px;
+$barre-height: 5px;
+$barre-width: 36px;
+
+/* Calcul du coefficient directeur pour l'alignement des biseaux */
+$offset: ($border-width / $barre-height) * ($space + $barre-height);
+
+.barre{
+	margin-left: $border-width;
+	margin-bottom: $space;
+	width: $barre-width;
+	height: $barre-height;
+	background-color: $body-bg;
+	transition: all 0.48s ease;
+
+	&.regular-bg{
+		background-color: $black;
+	}
+
+	&.short{
+		width: $barre-width - 2 * $offset;
+
+		&.right{
+			&:after{
+				margin-left: $barre-width - 2 * $offset;
+			}
+		}
+	}
+
+	&.medium{
+		width: $barre-width - $offset;
+
+		&.right{
+			&:after{
+				margin-left: $barre-width - 2 * $offset;
+			}
+		}
+	}
+
+
+	&.left{
+		&:before{
+			content:'';
+			position: absolute;
+			border-style: solid;
+			border-width: 0 0 #{$barre-height} #{$border-width};
+			border-color: transparent transparent $body-bg transparent;
+			margin-left: -#{$border-width};
+			transition: all 0.48s ease;
+		}
+
+
+		&.regular-bg{
+			&:before{
+				border-color: transparent transparent $black transparent;
+			}
+		}
+	}
+
+	&.right{
+		&:after{
+			content:'';
+			position: absolute;
+			border-style: solid;
+			margin-left: #{$barre-width};
+			border-width: #{$barre-height} #{$border-width} 0 0;
+			border-color: $black transparent transparent transparent;
+		}
+	}
+}

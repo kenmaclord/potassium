@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Strategies\Publishability;
+
+use App\Strategies\Publishability\PublishabilityStrategy;
+
+class DummyClass extends PublishabilityStrategy
+{
+    protected $user;
+
+    protected $conditions = [
+        'firstCondition',
+        'secondCondition'
+    ];
+
+
+    public function __construct($user){
+        this->user = $user;
+    }
+
+
+    public function firstCondition()
+    {
+        return true;
+    }
+
+
+    public function secondCondition()
+    {
+        return true;
+    }
+
+}

@@ -1,0 +1,40 @@
+#telechargements_catalogues{
+	.titre-page{
+		margin-bottom: 55px;
+	}
+
+	.thumbs-list{
+		flex-wrap: wrap;
+	}
+}
+
+
+#telechargements{
+	.content{
+		display: flex;
+		margin-top: 40px;
+
+		.telechargements__collections{
+			width: 32%;
+			margin-right: 2%;
+		}
+
+		.modeles{
+			width: 66%;
+			display: flex;
+			flex-wrap: wrap;
+		}
+	}
+}
+
+
+@media screen and (max-width: 640px){
+	#telechargements{
+		.content{
+			.telechargements__collections{
+				width: 100%;
+				margin-right: 0;
+			}
+		}
+	}
+}

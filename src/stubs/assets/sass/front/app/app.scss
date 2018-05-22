@@ -1,0 +1,107 @@
+body{
+	background-color: $body-bg;
+	min-height: 100vh;
+	overflow-x: hidden;
+	@extend .regular;
+	@extend .black;
+	font-size: 16px;
+}
+
+/* Apparition progressive de la page */
+[v-cloak]> * { display: none }
+.fade-enter-active, .fade-enter-to { transition: opacity 1200ms ease 800ms; }
+.fade-enter, .fade-leave-active, .fade-leave-to{ opacity: 0; }
+
+#front{
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+a{
+	color: $white;
+}
+
+a.black{
+	color: $black;
+}
+
+a.underlined{
+	text-decoration: underline;
+
+	&:hover{
+		text-decoration: none;
+	}
+}
+
+sup, sub{
+	text-transform: lowercase;
+}
+
+img.shadow{
+	display: block;
+	width: 100%;
+	transition: box-shadow 0.3s ease;
+
+	&:hover{
+		box-shadow: 4px 4px 7px #BBB;
+	}
+}
+
+
+
+%header{
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	height: $header-desktop-height;
+	width: 100%;
+
+	.logo{
+		img{
+			height: 42px;
+		}
+	}
+}
+
+
+
+.breadcrumb{
+	margin-bottom: 35px!important;
+
+	.element{
+		a{
+			padding: 10px 0;
+			color: $black;
+
+			&:after{
+				content: '>';
+				display: block;
+				padding: 0 7px;
+			}
+		}
+
+		&:last-child a{
+			text-decoration: underline;
+
+			&:after{
+				content:'';
+			}
+		}
+
+	}
+}
+
+@media screen and (max-width: $phone){
+	.breadcrumb{
+		margin-bottom: 30px!important;
+
+		.element{
+			a{
+				font-size: 1rem;
+			}
+		}
+	}
+}

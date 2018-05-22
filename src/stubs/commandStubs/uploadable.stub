@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Strategies\Upload;
+
+use App\Strategies\Upload\UploadStrategy;
+
+class DummyClass extends UploadStrategy
+{
+    /**
+     * Liste des extensions et mimetypes autorisés
+     *
+     * @var  Array
+     */
+    public $mimeTypesAllowed = [
+        "jpg" => "image/jpeg",
+        "jpeg" => "image/jpeg",
+        "png" => "image/png",
+        "pdf" => "application/pdf"
+        "pdf" => "application/pdf",
+        "png" => "image/png",
+        "zip" => "application/zip",
+        "obj" => "text/plain",
+        "dwg" => "application/octet-stream",
+        "skp" => "application/octet-stream",
+        "dxf" => "application/octet-stream"
+    ];
+}

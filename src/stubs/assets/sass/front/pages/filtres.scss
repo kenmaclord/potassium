@@ -1,0 +1,49 @@
+.filtresChoice{
+	display: flex;
+	width: 50%;
+	margin: 0 auto;
+	border-top: 1px solid black;
+	padding-top: 20px;
+	justify-content: space-between;
+
+	&.is-filtred{
+		justify-content: flex-start;
+
+		.filter-name{
+			@extend .din-regular;
+			font-size: 1.3rem;
+			margin-right: 10px;
+		}
+
+		img.remove-filter{
+			cursor: pointer;
+		}
+	}
+
+	.by{
+		@extend .din-black;
+		min-width: 115px;
+		font-size: 1.3rem;
+		margin-right: 20px;
+		display: flex;
+		align-items: center;
+	}
+}
+
+@media screen and (max-width: $phone){
+	.filtresChoice{
+		width: 100%;
+		border-top: none;
+
+		&.is-filtred{
+			.filter-name{
+				font-size: 1.2rem;
+			}
+		}
+
+		.by{
+			font-size: 1.2rem;
+			margin-right: 15px;
+		}
+	}
+}

@@ -1,0 +1,14 @@
+#mentions{
+	.bloc{
+		margin-bottom: 30px;
+
+		p{
+			margin: 0;
+			margin-bottom: 0px;
+
+			&.strong{
+				@extend .bold;
+			}
+		}
+	}
+}

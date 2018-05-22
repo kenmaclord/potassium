@@ -1,0 +1,26 @@
+    /* Initialisation de l'application */
+@import "../core/reset";
+@import "../core/variables";
+@import "../core/core";
+@import "../core/typo";
+
+@import "app/app";
+
+/*
+|--------------------------------------------------------------------------
+| Importation des fichiers d'éléments constants
+|--------------------------------------------------------------------------
+*/
+@import "app/sidebar";
+@import "app/header";
+@import "app/pages";
+
+
+/*
+|--------------------------------------------------------------------------
+| Importation des fichiers spécifiques aux pages
+|--------------------------------------------------------------------------
+*/
+@import "pages/langues";
+@import "pages/traductions";
+@import "pages/profile";

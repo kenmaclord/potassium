@@ -1,0 +1,23 @@
+{
+    "name": "kenmaclord/potassium",
+    "description": "A base admin preset",
+    keywords": ["preset", "Admin"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kenmaclord",
+            "email": "karl.morisset.register@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Potassium\\Preset\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": ["Potassium\\Preset\\PotassiumServiceProvider"]
+        }
+    }
+}

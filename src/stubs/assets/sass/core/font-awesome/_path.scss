@@ -1,0 +1,25 @@
+  /* FONT PATH
+ * -------------------------- */
+
+/*@font-face {
+  font-family: 'FontAwesome';
+  src: url('#{$fa-font-path}/fontawesome/fontawesome.eot?v=#{$fa-version}');
+  src: url('#{$fa-font-path}/fontawesome/fontawesome.eot?#iefix&v=#{$fa-version}') format('embedded-opentype'),
+    url('#{$fa-font-path}/fontawesome/fontawesome.woff2?v=#{$fa-version}') format('woff2'),
+    url('#{$fa-font-path}/fontawesome/fontawesome.woff?v=#{$fa-version}') format('woff'),
+    url('#{$fa-font-path}/fontawesome/fontawesome.ttf?v=#{$fa-version}') format('truetype'),
+    url('#{$fa-font-path}/fontawesome/fontawesome.svg?v=#{$fa-version}#fontawesomeregular') format('svg');
+//  src: url('#{$fa-font-path}/fontawesome-webfont/FontAwesome.otf') format('opentype'); // used when developing fonts
+  font-weight: normal;
+  font-style: normal;
+}*/
+
+@font-face {
+  font-family: 'FontAwesome';
+  $fontFolder: '/fonts/';
+  src:  url('/fonts/fontawesome/fontawesome.woff2?v=#{$fa-version}') format('woff2'),
+        url('/fonts/fontawesome/fontawesome.woff?v=#{$fa-version}') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}

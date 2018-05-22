@@ -1,0 +1,101 @@
+.configurateur{
+	margin-top: 60px;
+
+	.wrapper{
+		display: flex;
+	}
+
+	.presentation{
+		order: 0;
+	}
+
+	.title{
+		@extend %chapeau;
+	}
+
+	.instructions{
+		margin-bottom: 10px;
+	}
+
+	.zones{
+		width: 24%;
+		min-width: 385px;
+		margin-right: calc(4% / 3);
+	}
+
+	.personnalisation{
+		padding-top: 10px;
+		border-top: 1px solid $black;
+		margin-top: 15px;
+
+		.name{
+			@extend %chapeau;
+		}
+
+		.colors{
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			width: 100%;
+		}
+	}
+
+
+	.image-finition{
+		width: calc(75% - (1% / 3));
+		height: 75vh;
+ 		position: relative;
+
+		img{
+			display: block;
+			object-fit: contain;
+			width: 100%;
+			height: 100%;
+		}
+
+		.reset{
+			display: block;
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 25px;
+			height: 25px;
+			cursor: pointer;
+		}
+	}
+}
+
+
+@media screen and (max-width: $widescreen){
+	.configurateur{
+
+		.wrapper{
+			flex-direction: column;
+		}
+
+		.zones{
+			width: 100%;
+			margin-right: 0;
+			order: 2;
+			min-width: auto;
+		}
+
+		.presentation{
+			order: 0;
+		}
+
+		.personnalisation{
+			.colors{
+				display: flex;
+				justify-content: space-around;
+				flex-wrap: wrap;
+				width: 100%;
+			}
+		}
+
+		.image-finition{
+			width: 100%;
+			order: 1;
+		}
+	}
+}
