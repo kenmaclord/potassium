@@ -1,7 +1,7 @@
 {
     "name": "kenmaclord/potassium",
     "description": "A base admin preset",
-    keywords": ["preset", "Admin"],
+    "keywords": ["preset", "admin interface"],
     "license": "MIT",
     "authors": [
         {
