@@ -1,8 +1,8 @@
 <?php
 
-namespace Potassium\\Preset;
+namespace Potassium\Preset;
 
-use Potassium\\Preset\PotassiumPreset;
+use Potassium\Preset\PotassiumPreset;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Console\PresetCommand;
 
@@ -15,7 +15,7 @@ class PotassiumServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        PresetCommand::macro('scaffold', function($command){
+        PresetCommand::macro('potassium', function($command){
             PotassiumPreset::install();
         });
     }
