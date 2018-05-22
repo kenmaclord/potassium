@@ -56,6 +56,9 @@ class Install extends Command
         shell_exec('npm install');
         $this->info('Paquets Node installés');
 
+        shell_exec('./node_modules/.bin/tailwind init');
+        $this->info('Tailwind initialisé');
+
         shell_exec('npm run dev');
         $this->info('Assets compilés');
     }

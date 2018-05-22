@@ -1,6 +1,6 @@
 <?php
 
-namespace Scaffolder;
+namespace Potassium\Preset;
 
 use Illuminate\Foundation\Console\Presets\Preset;
 
@@ -24,6 +24,9 @@ class PotassiumPreset extends Preset
         static::setLangFile();
         static::setRoutes();
         static::setData();
+        static::setTestUtilities();
+        static::setKernel();
+        static::setControllers();
     }
 
 
@@ -135,7 +138,8 @@ class PotassiumPreset extends Preset
 
     public static function setConfigFiles()
     {
-        static::copyFile('', 'laravellocalization.php', base_path('config'));
+        static::copyFile('config', 'laravellocalization.php', base_path('config'));
+        static::copyFile('config', 'app.php', base_path('config'));
         // copy(__DIR__.'/stubs/laravellocalization.php', resource_path('stubs/laravellocalization.php'));
     }
 
@@ -186,6 +190,24 @@ class PotassiumPreset extends Preset
     public static function setData()
     {
         static::copyDirectory('data', 'public');
+    }
+
+
+    public static function setTestUtilities()
+    {
+        static::copyDirectory('tests', '');
+    }
+
+
+    public static function setKernel()
+    {
+        static::copyFile('', 'Kernel.php', base_path('app/Http'));
+    }
+
+    public static function setControllers()
+    {
+        static::copyDirectory('Controllers/Admin', 'app/Http');
+        static::copyDirectory('Controllers/Front', 'app/Http');
     }
 
 

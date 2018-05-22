@@ -57,4 +57,14 @@ Route::group(["prefix"=>"admin","middleware"=>"auth", 'namespace' => 'Admin'], f
 
 });
 
-Route::get('/', 'FrontController@home');
+/**
+* Routes pour le front
+*/
+Route::group(
+[
+    "prefix" => LaravelLocalization::setLocale(),
+    'namespace' => 'Front',
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect' ]
+], function(){
+    Route::get('/', 'FrontController@home');
+});
