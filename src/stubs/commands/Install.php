@@ -44,12 +44,6 @@ class Install extends Command
         shell_exec('~/composer.phar dump-autoload');
         $this->info('Autoload régénéré');
 
-        Artisan::call('migrate');
-        $this->info('Migrations terminée');
-
-        Artisan::call('db:seed');
-        $this->info('Données insérées');
-
         shell_exec('git init');
         $this->info('Git initialisé');
 

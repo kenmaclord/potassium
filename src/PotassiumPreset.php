@@ -8,22 +8,21 @@ class PotassiumPreset extends Preset
 {
     public static function install()
     {
+        static::setAppFolder();
+        static::setTestUtilities();
         static::updateComposer();
         static::updatePackages();
         static::updateMix();
         static::setAssets();
         static::setCommandStubs();
         static::setStrategies();
-        static::setAppFolder();
         static::setConfigFiles();
-        static::setDatabase();
         static::setFonts();
         static::setProviders();
         static::setViews();
         static::setLangFile();
         static::setRoutes();
         static::setData();
-        static::setTestUtilities();
         static::setKernel();
         static::setControllers();
     }
