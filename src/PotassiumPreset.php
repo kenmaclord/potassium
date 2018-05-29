@@ -8,8 +8,7 @@ class PotassiumPreset extends Preset
 {
     public static function install()
     {
-        static::setAppFolder();
-        static::setTestUtilities();
+        static::setTests();
         static::updateComposer();
         static::updatePackages();
         static::updateMix();
@@ -18,7 +17,6 @@ class PotassiumPreset extends Preset
         static::setStrategies();
         static::setConfigFiles();
         static::setFonts();
-        static::setProviders();
         static::setViews();
         static::setLangFile();
         static::setRoutes();
@@ -144,7 +142,7 @@ class PotassiumPreset extends Preset
 
     public static function setDatabase()
     {
-        static::copyDirectory('database');
+        return static::copyDirectory('database');
     }
 
 
@@ -192,8 +190,9 @@ class PotassiumPreset extends Preset
     }
 
 
-    public static function setTestUtilities()
+    public static function setTests()
     {
+        static::copyFile('', 'phpunit.xml', base_path());
         static::copyDirectory('tests', '');
     }
 
@@ -246,7 +245,7 @@ class PotassiumPreset extends Preset
         $src = __DIR__."/stubs/{$folder}";
         $dest = base_path($destination);
 
-        shell_exec("cp -r $src $dest");
+        return shell_exec("cp -r $src $dest");
     }
 
     /**

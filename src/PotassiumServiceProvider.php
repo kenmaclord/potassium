@@ -18,7 +18,11 @@ class PotassiumServiceProvider extends ServiceProvider
     {
         PresetCommand::macro('potassium', function($command){
             PotassiumPreset::setCommands();
-            $command->info('Commandes installées');
+            PotassiumPreset::setAppFolder();
+            PotassiumPreset::setDatabase();
+            PotassiumPreset::setProviders();
+
+            $command->info('Commandes, App folder, Database et Providers installés');
 
             Artisan::call('potassium:prepare');
 

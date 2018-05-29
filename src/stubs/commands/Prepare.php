@@ -51,14 +51,6 @@ class Prepare extends Command
         shell_exec('/Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot --execute="create database ' .$database.';"');
         $this->info('Base de données générée');
 
-        PotassiumPreset::setDatabase();
-
-        Artisan::call('migrate');
-        $this->info('Migrations terminée');
-
-        Artisan::call('db:seed');
-        $this->info('Données insérées');
-
         $this->setEnvironmentValue('APP_NAME', $application);
         $this->setEnvironmentValue('APP_URL', $url);
 
