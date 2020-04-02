@@ -1,6 +1,6 @@
 <?php
 
-namespace Potassium\App\Console\Commands;
+namespace Potassium\App\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;

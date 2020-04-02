@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Potassium\\": "src",
+            "Potassium\\": "src"
         },
         "files": [
             "src/App/Helpers/helpers.php"
