@@ -2,251 +2,283 @@
 
 namespace Potassium\Preset;
 
+use Dotenv\Dotenv;
 use Illuminate\Foundation\Console\Presets\Preset;
 
 class PotassiumPreset extends Preset
 {
-    public static function install()
+    protected static $command;
+
+    public static function prepare($command)
     {
-        static::setTests();
-        static::updateComposer();
-        static::updatePackages();
-        static::updateMix();
-        static::setAssets();
-        static::setCommandStubs();
-        static::setStrategies();
-        static::setConfigFiles();
-        static::setFonts();
-        static::setViews();
-        static::setLangFile();
-        static::setRoutes();
-        static::setData();
-        static::setKernel();
-        static::setControllers();
+        $application = $command->ask("Quel est le nom de l'application ?");
+        $url = $command->ask("Quel est l'url de l'application ? (http://domaine.com:port)");
+        $database = $command->ask("Quel est le nom de la base de données à créer ?");
+
+        static::setEnvironmentValue('APP_NAME', $application);
+        static::setEnvironmentValue('APP_URL', $url);
+
+        static::setEnvironmentValue('DB_SOCKET', '/Applications/MAMP/tmp/mysql/mysql.sock');
+        static::setEnvironmentValue('DB_DATABASE', $database);
+        static::setEnvironmentValue('DB_USERNAME', 'root');
+        static::setEnvironmentValue('DB_PASSWORD', 'root');
+
+        static::setEnvironmentValue('MAIL_HOST', 'smtp.mailtrap.io');
+        static::setEnvironmentValue('MAIL_PORT', '2525');
+
+        $command->info("Fichier d'environnement prêt");
+
+        // Git
+        shell_exec('git init');
+        $command->info('Git initialisé');
+
+        // Base de données
+        shell_exec('/Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot --execute="create database ' .$database.' character set UTF8mb4 collate utf8mb4_unicode_ci;"');
+        $command->info("Base de données créee");
+
+        // static::setAppFolder();
+        // static::setProviders();
+        // static::setTests();
+        // static::updateComposer($command);
     }
+
+
+
+
+
+
+
+
+
+    public static function install($command)
+    {
+        if (file_exists($userModel = base_path('app/User.php'))) {
+            unlink($userModel);
+        }
+
+        static::updateComposer($command);
+        static::setDatabase($command);
+        static::updatePackages();
+
+        // shell_exec("composer dump-autoload");
+
+        // static::updateMix();
+        // static::setAssets();
+        // static::setStrategies();
+        // static::setConfigFiles();
+        // static::setFonts();
+        // static::setViews();
+        // static::setLangFile();
+        // static::setRoutes();
+        // static::setData();
+        // static::setKernel();
+        // static::setControllers();
+        // static::setCommands();
+   }
 
 
     public static function updatePackageArray()
     {
         return [
-            "axios" => "^0.18",
-            "cross-env" => "^5.1",
-            "laravel-mix" => "^2.0",
-            "lodash" => "^4.17.10",
-            "bulma" => "^0.7.1",
-            "moment" => "^2.22.1",
-            "sortablejs" => "^1.7.0",
-            "velocity-animate" => "^1.5.1",
-            "vue" => "^2.5.16",
-            "laravel-mix-tailwind" => "^0.1.0"
+            "axios" => "^0.19.*",
+            "bulma" => "^0.8.*",
+            "laravel-mix" => "^5.*",
+            "mix-tailwindcss" => "^1.*",
+            "lodash" => "^4.*",
+            "moment" => "^2.*",
+            "dropzone" => "^5.*",
+            "promise-polyfill" => "8.*",
+            "sortablejs" => "^1.*",
+            "tailwindcss" => "^1.*",
+            "velocity-animate" => "^1.*",
+            "vue" => "^2.*"
         ];
     }
 
 
-    public static function updateComposer()
+    public static function updateComposer($command)
     {
-        static::copyFile('', 'composer.json', base_path());
-        shell_exec("~/composer.phar update");
-        //copy(__DIR__.'/stubs/composer.json', base_path('composer.json'));
+        // static::copyFile('', 'composer.json', base_path());
+        shell_exec("composer update");
+        $command->info('Packages Composer à jour');
     }
 
 
-    public static function updateMix()
+    // public static function updateMix()
+    // {
+    //     static::copyFile('', 'webpack.mix.js', base_path());
+    // }
+
+
+    // public static function setAssets()
+    // {
+    //     static::copyDirectory('assets/js', 'resources');
+    //     static::copyDirectory('assets/sass', 'resources');
+    // }
+
+    // public static function setCommands()
+    // {
+    //     $files = [
+    //         "NewPageCommand.php",
+    //         "NamingStrategyCommand.php",
+    //         "PublishabilityStrategyCommand.php",
+    //         "UploadStrategyCommand.php"
+    //     ];
+
+    //     foreach ($files as $file) {
+    //         static::copyFile("commands", $file, base_path('app/Console/Commands'));
+    //     }
+    // }
+
+
+    // public static function setStrategies()
+    // {
+    //     static::copyDirectory('Strategies', 'app');
+    // }
+
+    // public static function setAppFolder()
+    // {
+    //     $folders = [
+    //         "Entities",
+    //         "Events",
+    //         "Helpers",
+    //         "Listeners",
+    //         "Notifications",
+    //         "Observers",
+    //         "Policies",
+    //         "Traits"
+    //     ];
+
+    //     foreach ($folders as $f) {
+    //         static::copyDirectory("App/{$f}", 'app');
+    //     }
+
+    //     if (file_exists($userModel = base_path('app/User.php'))) {
+    //         unlink($userModel);
+    //     }
+    // }
+
+    // public static function setConfigFiles()
+    // {
+    //     static::copyFile('config', 'app.php', base_path('config'));
+    //     static::copyFile('config', 'image.php', base_path('config'));
+    //     static::copyFile('config', 'laravellocalization.php', base_path('config'));
+    //     static::copyFile('config', 'auth.php', base_path('config'));
+    //     static::copyFile('config', 'filesystems.php', base_path('config'));
+    // }
+
+    public static function setDatabase($command)
     {
-        static::copyFile('', 'webpack.mix.js', base_path());
-        //copy(__DIR__.'/stubs/webpack.mix.js', base_path('webpack.mix.js'));
+        // static::copyDirectory('database');
+
+        \Artisan::call('migrate');
+
+        $command->info('Base de donnée prête');
     }
 
 
-    public static function setAssets()
-    {
-        static::copyDirectory('assets', 'resources');
-    }
-
-    public static function setCommands()
-    {
-        $files = [
-            "Install.php",
-            "NamingStrategyCommand.php",
-            "Prepare.php",
-            "PublishabilityStrategyCommand.php",
-            "UploadStrategyCommand.php"
-        ];
-
-        // static::copyFile('commands/Install.php', base_path('app/Console/Commands'));
-        // static::copyFile('commands/NamingStrategyCommand.php', base_path('app/Console/Commands'));
-        // static::copyFile('commands/Prepare.php', base_path('app/Console/Commands'));
-        // static::copyFile('commands/PublishabilityStrategyCommand.php', base_path('app/Console/Commands'));
-        // static::copyFile('commands/UploadStrategyCommand.php', base_path('app/Console/Commands'));
-
-        foreach ($files as $file) {
-            static::copyFile("commands", $file, base_path('app/Console/Commands'));
-        }
+    // public static function setFonts()
+    // {
+    //     static::copyDirectory('fonts', 'public');
+    // }
 
 
+    // public static function setProviders()
+    // {
+    //     static::copyFile('Providers', 'AppServiceProvider.php', base_path('app/Providers'));
+    //     static::copyFile('Providers', 'AuthServiceProvider.php', base_path('app/Providers'));
+    //     static::copyFile('Providers', 'ConfigServiceProvider.php', base_path('app/Providers'));
+    //     static::copyFile('Providers', 'EventServiceProvider.php', base_path('app/Providers'));
+    // }
 
-        // copy(__DIR__.'/stubs/commands/Install.php', base_path('app/Console/Commands/Install.php'));
-        // copy(__DIR__.'/stubs/commands/NamingStrategyCommand.php', base_path('app/Console/Commands/NamingStrategyCommand.php'));
-        // copy(__DIR__.'/stubs/commands/Prepare.php', base_path('app/Console/Commands/Prepare.php'));
-        // copy(__DIR__.'/stubs/commands/PublishabilityStrategyCommand.php', base_path('app/Console/Commands/PublishabilityStrategyCommand.php'));
-        // copy(__DIR__.'/stubs/commands/UploadStrategyCommand.php', base_path('app/Console/Commands/UploadStrategyCommand.php'));
-    }
+    // public static function setViews()
+    // {
+    //     static::copyDirectory('views', 'resources');
+    // }
 
+    // public static function setLangFile()
+    // {
+    //     static::copyFile('lang/fr', 'application.php', resource_path('lang/fr'));
+    //     static::copyFile('lang/fr', 'auth.php', resource_path('lang/fr'));
+    //     static::copyFile('lang/fr', 'pagination.php', resource_path('lang/fr'));
+    //     static::copyFile('lang/fr', 'passwords.php', resource_path('lang/fr'));
+    //     static::copyFile('lang/fr', 'validation.php', resource_path('lang/fr'));
 
-    public static function setStrategies()
-    {
-        static::copyDirectory('Strategies', 'app');
-    }
+    //     static::copyFile('lang/en', 'application.php', resource_path('lang/en'));
+    // }
 
-
-    public static function setCommandStubs()
-    {
-        // if (!file_exists(resource_path('stubs'))) {
-        //     mkdir(resource_path('stubs'));
-        // }
-
-        static::copyFile('commandStubs', 'naming.stub', resource_path('stubs'));
-        static::copyFile('commandStubs', 'publishable.stub', resource_path('stubs'));
-        static::copyFile('commandStubs', 'uploadable.stub', resource_path('stubs'));
-
-        // copy(__DIR__.'/stubs/commandStubs/naming.stub', resource_path('stubs/naming.stub'));
-        // copy(__DIR__.'/stubs/commandStubs/publishable.stub', resource_path('stubs/publishable.stub'));
-        // copy(__DIR__.'/stubs/commandStubs/uploadable.stub', resource_path('stubs/uploadable.stub'));
-    }
-
-
-    public static function setAppFolder()
-    {
-        $folders = [
-            "Entities",
-            "Events",
-            "Helpers",
-            "Listeners",
-            "Notifications",
-            "Observers",
-            "Policies",
-            "Traits"
-        ];
-
-        foreach ($folders as $f) {
-            static::copyDirectory("App/{$f}", 'app');
-        }
-    }
-
-    public static function setConfigFiles()
-    {
-        static::copyFile('config', 'laravellocalization.php', base_path('config'));
-        static::copyFile('config', 'app.php', base_path('config'));
-        // copy(__DIR__.'/stubs/laravellocalization.php', resource_path('stubs/laravellocalization.php'));
-    }
-
-    public static function setDatabase()
-    {
-        return static::copyDirectory('database');
-    }
+    // public static function setRoutes()
+    // {
+    //     static::copyFile('', 'web.php', base_path('routes'));
+    //     static::copyFile('', 'api.php', base_path('routes'));
+    // }
 
 
-    public static function setFonts()
-    {
-        static::copyDirectory('fonts', 'public');
-    }
+    // public static function setData()
+    // {
+    //     static::copyDirectory('data', 'public');
+    // }
 
 
-    public static function setProviders()
-    {
-        static::copyFile('Providers', 'AppServiceProvider.php', base_path('app/Providers'));
-        static::copyFile('Providers', 'AuthServiceProvider.php', base_path('app/Providers'));
-        static::copyFile('Providers', 'ConfigServiceProvider.php', base_path('app/Providers'));
-        static::copyFile('Providers', 'EventServiceProvider.php', base_path('app/Providers'));
-        // copy(__DIR__.'/stubs/Providers/AppServiceProvider.php', base_path('app/Providers/AppServiceProvider.php'));
-        // copy(__DIR__.'/stubs/Providers/AuthServiceProvider.php', base_path('app/Providers/AuthServiceProvider.php'));
-        // copy(__DIR__.'/stubs/Providers/ConfigServiceProvider.php', base_path('app/Providers/ConfigServiceProvider.php'));
-        // copy(__DIR__.'/stubs/Providers/EventServiceProvider.php', base_path('app/Providers/EventServiceProvider.php'));
-    }
-
-    public static function setViews()
-    {
-        static::copyDirectory('views', 'resources');
-    }
-
-    public static function setLangFile()
-    {
-        static::copyFile('lang/fr', 'application.php', resource_path('lang/fr'));
-        static::copyFile('lang/en', 'application.php', resource_path('lang/en'));
-        // copy(__DIR__.'/stubs/lang/fr/application.php', resource_path('lang/fr/application.php'));
-        // copy(__DIR__.'/stubs/lang/en/application.php', resource_path('lang/en/application.php'));
-    }
-
-    public static function setRoutes()
-    {
-        static::copyFile('', 'web.php', base_path('routes'));
-        // copy(__DIR__.'/stubs/web.php', base_path('routes/web.php'));
-    }
+    // public static function setTests()
+    // {
+    //     static::copyFile('', 'phpunit.xml', base_path());
+    //     static::copyDirectory('tests', '');
+    // }
 
 
-    public static function setData()
-    {
-        static::copyDirectory('data', 'public');
-    }
+    // public static function setKernel()
+    // {
+    //     static::copyFile('', 'Kernel.php', base_path('app/Http'));
+    // }
 
-
-    public static function setTests()
-    {
-        static::copyFile('', 'phpunit.xml', base_path());
-        static::copyDirectory('tests', '');
-    }
-
-
-    public static function setKernel()
-    {
-        static::copyFile('', 'Kernel.php', base_path('app/Http'));
-    }
-
-    public static function setControllers()
-    {
-        static::copyDirectory('Controllers/Admin', 'app/Http');
-        static::copyDirectory('Controllers/Front', 'app/Http');
-    }
-
+    // public static function setControllers()
+    // {
+    //     static::copyDirectory('Controllers/Admin', 'app/Http/Controllers');
+    //     static::copyDirectory('Controllers/Front', 'app/Http/Controllers');
+    //     static::copyFile('Controllers', 'Controller.php', base_path('app/Http/Controllers'));
+    //     static::copyFile('Controllers/Auth', 'LoginController.php', base_path('app/Http/Controllers/Auth'));
+    //     static::copyFile('Controllers/Auth', 'RegisterController.php', base_path('app/Http/Controllers/Auth'));
+    //     static::copyFile('Controllers/Auth', 'ResetPasswordController.php', base_path('app/Http/Controllers/Auth'));
+    //     static::copyFile('Controllers/Auth', 'VerificationController.php', base_path('app/Http/Controllers/Auth'));
+    // }
 
     /**
-     * Copie un fichier d'un répertorie à un autre en vérifiant que le répertoire de destination existe
+     * En cas d'un ajout d'admin à posteriori
      *
-     * @param   String  $file
-     * @param   String  $destFolder
-     * @param   String  $newName
-     *
-     * @return  Void
+     * @return  [type]  [description]
      */
-    public static function copyFile($srcFolder, $file, $destFolder, $newName=null)
-    {
-        $baseFolder = __DIR__."/stubs/{$srcFolder}";
+    // public static function folders($command)
+    // {
+    //     static::setAppFolder();
+    //     static::setProviders();
+    //     static::setTests();
+    //     static::updateComposer($command);
+    // }
 
-        if (!file_exists($destFolder)) {
-            mkdir($destFolder);
+    public static function assets($command)
+    {
+        // Nodes modules
+        shell_exec('npm install');
+        $command->info('Paquets Node installés');
+
+        // Tailwind
+        $str = "En attente de tailwind...";
+
+        while(!file_exists("./node_modules/.bin/tailwind")){
+            $str.=".";
+            $command->info($str);
+            sleep(1);
         }
 
-        $newName = $newName ?: $file;
+        shell_exec('./node_modules/.bin/tailwind init');
+        $command->info('Tailwind initialisé');
 
-        copy("{$baseFolder}/{$file}", "{$destFolder}/{$newName}");
+        // Compilation des assets
+        // shell_exec('npm run dev');
+        // $command->info('Assets compilés');
     }
 
-
-    /**
-     * Copie un dossier entier depuis le dossiers stubs
-     *
-     * @param   String  $folder
-     * @param   String  $destination
-     *
-     * @return  Void
-     */
-    private static function copyDirectory($folder, $destination='')
-    {
-        $src = __DIR__."/stubs/{$folder}";
-        $dest = base_path($destination);
-
-        return shell_exec("cp -r $src $dest");
-    }
 
     /**
      * Insère ou modifie une valeur dans le fichier d'environnement
@@ -254,7 +286,7 @@ class PotassiumPreset extends Preset
      * @param  String  $envKey
      * @param  String  $envValue
      */
-    public function setEnvironmentValue($envKey, $envValue)
+    public static function setEnvironmentValue($envKey, $envValue)
     {
         $envFile = app()->environmentFilePath();
 
@@ -263,10 +295,10 @@ class PotassiumPreset extends Preset
         $split = explode("{$envKey}=", $str);
 
         if(count($split) > 1){
-            $oldValue = $this->getEnv($envKey, $str);
+            $oldValue = static::getEnv($envKey, $str);
             $str = str_replace("{$envKey}={$oldValue}\n", "{$envKey}={$envValue}\n", $str);
         }else{
-            $pass = $this->getEnv('DB_PASSWORD', $str);
+            $pass = static::getEnv('DB_PASSWORD', $str);
             $str = str_replace("DB_PASSWORD={$pass}\n", "DB_PASSWORD={$pass}\n{$envKey}={$envValue}\n", $str);
         }
 
@@ -284,8 +316,48 @@ class PotassiumPreset extends Preset
      *
      * @return  String
      */
-    public function getEnv($key, $str)
+    public static function getEnv($key, $str)
     {
         return explode("\n", (explode("{$key}=", $str))[1])[0];
     }
+
+
+    /**
+     * Copie un fichier d'un répertorie à un autre en vérifiant que le répertoire de destination existe
+     *
+     * @param   String  $file
+     * @param   String  $destFolder
+     * @param   String  $newName
+     *
+     * @return  Void
+     */
+    // public static function copyFile($srcFolder, $file, $destFolder, $newName=null)
+    // {
+    //     $baseFolder = __DIR__."/stubs/{$srcFolder}";
+
+    //     if (!file_exists($destFolder)) {
+    //         mkdir($destFolder);
+    //     }
+
+    //     $newName = $newName ?: $file;
+
+    //     copy("{$baseFolder}/{$file}", "{$destFolder}/{$newName}");
+    // }
+
+
+    /**
+     * Copie un dossier entier depuis le dossiers stubs
+     *
+     * @param   String  $folder
+     * @param   String  $destination
+     *
+     * @return  Void
+     */
+    // private static function copyDirectory($folder, $destination='')
+    // {
+    //     $src = __DIR__."/stubs/{$folder}";
+    //     $dest = base_path($destination);
+
+    //     return shell_exec("cp -r $src $dest");
+    // }
 }

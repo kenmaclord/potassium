@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Strategies\Processing;
+
+use App\Strategies\Processing\ProcessingStrategy;
+
+class DummyClass extends ProcessingStrategy
+{
+
+}
