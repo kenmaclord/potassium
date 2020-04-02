@@ -1,6 +1,6 @@
 <?php
 
-namespace Potassium\Preset;
+namespace Potassium;
 
 use Dotenv\Dotenv;
 use Illuminate\Foundation\Console\Presets\Preset;

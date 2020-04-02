@@ -1,9 +1,9 @@
 <?php
 
-namespace Potassium\Preset;
+namespace Potassium;
 
 use Dotenv\Dotenv;
-use Potassium\Preset\PotassiumPreset;
+use Potassium\PotassiumPreset;
 use Illuminate\Support\Facades\Schema;
 use Potassium\App\Observers\Observers;
 use Illuminate\Support\Facades\Artisan;
