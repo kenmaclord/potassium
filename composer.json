@@ -22,15 +22,7 @@
             "Potassium\\": "src",
         },
         "files": [
-            "src/framework/App/Helpers/helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        },
-        "files": [
-            "tests/utilities/functions.php"
+            "src/App/Helpers/helpers.php"
         ]
     },
     "extra": {
