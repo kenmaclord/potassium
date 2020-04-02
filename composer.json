@@ -19,9 +19,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Potassium\\": "src/framework",
+            "Potassium\\": "src",
         },
-        "files": ["vendor/kenmaclord/potassium/src/framework/App/Helpers/helpers.php"]
+        "files": [
+            "src/framework/App/Helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
