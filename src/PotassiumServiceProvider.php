@@ -9,7 +9,10 @@ use Potassium\App\Observers\Observers;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Console\PresetCommand;
+use Potassium\App\Providers\AuthServiceProvider;
+use Potassium\App\Providers\EventServiceProvider;
 use Potassium\App\Console\Commands\NewPageCommand;
+use Potassium\App\Providers\ConfigServiceProvider;
 use Potassium\App\Http\Controllers\Admin\HomeController;
 use Potassium\App\Console\Commands\NamingStrategyCommand;
 use Potassium\App\Console\Commands\UploadStrategyCommand;
@@ -80,6 +83,10 @@ class PotassiumServiceProvider extends ServiceProvider
 
         $this->app->make(FrontController::class);
         $this->app->make(FrontTraductionsController::class);
+
+        $this->app->register(EventServiceProvider::class);
+        $this->app->register(ConfigServiceProvider::class);
+        $this->app->register(AuthServiceProvider::class);
     }
 
 

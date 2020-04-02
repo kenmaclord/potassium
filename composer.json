@@ -28,10 +28,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Potassium\\PotassiumServiceProvider",
-                "Potassium\\App\\Providers\\EventServiceProvider",
-                "Potassium\\App\\Providers\\ConfigServiceProvider",
-                "Potassium\\App\\Providers\\AuthServiceProvider"
+                "Potassium\\PotassiumServiceProvider"
             ]
         }
     }
