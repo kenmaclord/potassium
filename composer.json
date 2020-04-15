@@ -8,7 +8,7 @@
             "email": "karl.morisset.register@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev-master",
     "require": {
         "intervention/image": "^2.5",
         "mcamara/laravel-localization": "^1.5",
