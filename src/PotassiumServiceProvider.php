@@ -41,39 +41,13 @@ class PotassiumServiceProvider extends ServiceProvider
             $command->info('Application installée');
         });
 
-        // PresetCommand::macro('potassium-init', function($command){
-        //     PotassiumPreset::prepare($command);
-        //     $command->info('Application initialisée');
-        // });
-
-        // PresetCommand::macro('potassium-folders', function($command){
-        //     PotassiumPreset::folders($command);
-        //     $command->info('Dossiers installés');
-        // });
         $this->init();
         $this->loaders();
         $this->publishCommands();
     }
 
 
-    public function register()
-    {
-        // $this->app->make(DashboardController::class);
-        // $this->app->make(DroitsController::class);
-        // $this->app->make(HomeController::class);
-        // $this->app->make(LanguesController::class);
-        // $this->app->make(TraductionsContentController::class);
-        // $this->app->make(TraductionsController::class);
-        // $this->app->make(UsersController::class);
-        // $this->app->make(ZonesController::class);
-
-        // $this->app->make(FrontController::class);
-        // $this->app->make(FrontTraductionsController::class);
-
-        // $this->app->register(EventServiceProvider::class);
-        // $this->app->register(ConfigServiceProvider::class);
-        // $this->app->register(AuthServiceProvider::class);
-    }
+    public function register(){}
 
 
     /**

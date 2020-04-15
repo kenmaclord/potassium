@@ -46,76 +46,14 @@ class PotassiumPreset extends Preset
         static::cleanUp();
     }
 
-    public static function cleanUp()
-    {
-        if (file_exists($userModel = base_path('app/User.php'))) {
-            unlink($userModel);
-        }
 
-        if (file_exists($exampleTestFile = base_path('tests/Feature/ExampleTest.php'))) {
-            unlink($exampleTestFile);
-        }
-
-        if (file_exists($exampleTestFile = base_path('tests/Unit/ExampleTest.php'))) {
-            unlink($exampleTestFile);
-        }
-
-        $migrationFiles = glob(base_path('/database/migrations/*.*'));
-
-        foreach ($migrationFiles as $m) {
-            if (strpos($m, "create_users_table")) {
-                unlink($m);
-            }
-        }
-    }
-
-
-    // public static function assets()
-    // {
-    //     static::updatePackages();
-    // }
-
-
-    public static function updatePackageArray()
-    {
-        return [
-            "axios" => "^0.19.*",
-            "bulma" => "^0.8.*",
-            "cross-env" => "^7.*",
-            "dropzone" => "^5.*",
-            "laravel-mix" => "^5.*",
-            "lodash" => "^4.*",
-            "mix-tailwindcss" => "^1.*",
-            "moment" => "^2.*",
-            "promise-polyfill" => "8.*",
-            "resolve-url-loader" => "^3.1.0",
-            "sass" => "^1.26.3",
-            "sass-loader" => "^8.0.2",
-            "sortablejs" => "^1.*",
-            "tailwindcss" => "^1.*",
-            "velocity-animate" => "^1.*",
-            "vue" => "^2.*",
-            "vue-template-compiler" => "^2.6.*"
-        ];
-    }
-
-
-    // public static function updateComposer($command)
-    // {
-    //     shell_exec("composer update");
-    //     $command->info('Packages Composer à jour');
-    // }
-
-
-    public static function setDatabase($command)
-    {
-        \Artisan::call('migrate');
-        \Artisan::call('db:seed --class="Potassium\\\Database\\\Seeds\\\PackageDatabaseSeeder"');
-
-        $command->info('Base de donnée prête');
-    }
-
-
+    /**
+     * Compile et publie l'application pour la rendre entièrement fonctionnelle
+     *
+     * @param   $command
+     *
+     * @return  void
+     */
     public static function launch($command)
     {
         shell_exec('composer dump-autoload');
@@ -140,6 +78,64 @@ class PotassiumPreset extends Preset
         shell_exec('git add .');
         shell_exec('git commit -m "Initial Commit"');
         $command->info('Premier commit effectué');
+    }
+
+
+
+    public static function setDatabase($command)
+    {
+        \Artisan::call('migrate');
+        \Artisan::call('db:seed --class="Potassium\\\Database\\\Seeds\\\PackageDatabaseSeeder"');
+
+        $command->info('Base de donnée prête');
+    }
+
+
+    public static function cleanUp()
+    {
+        if (file_exists($userModel = base_path('app/User.php'))) {
+            unlink($userModel);
+        }
+
+        if (file_exists($exampleTestFile = base_path('tests/Feature/ExampleTest.php'))) {
+            unlink($exampleTestFile);
+        }
+
+        if (file_exists($exampleTestFile = base_path('tests/Unit/ExampleTest.php'))) {
+            unlink($exampleTestFile);
+        }
+
+        $migrationFiles = glob(base_path('/database/migrations/*.*'));
+
+        foreach ($migrationFiles as $m) {
+            if (strpos($m, "create_users_table")) {
+                unlink($m);
+            }
+        }
+    }
+
+
+    public static function updatePackageArray()
+    {
+        return [
+            "axios" => "^0.19.*",
+            "bulma" => "^0.8.*",
+            "cross-env" => "^7.*",
+            "dropzone" => "^5.*",
+            "laravel-mix" => "^5.*",
+            "lodash" => "^4.*",
+            "mix-tailwindcss" => "^1.*",
+            "moment" => "^2.*",
+            "promise-polyfill" => "8.*",
+            "resolve-url-loader" => "^3.1.0",
+            "sass" => "^1.26.3",
+            "sass-loader" => "^8.0.2",
+            "sortablejs" => "^1.*",
+            "tailwindcss" => "^1.*",
+            "velocity-animate" => "^1.*",
+            "vue" => "^2.*",
+            "vue-template-compiler" => "^2.6.*"
+        ];
     }
 
 
