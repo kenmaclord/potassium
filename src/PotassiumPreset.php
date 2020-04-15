@@ -38,9 +38,6 @@ class PotassiumPreset extends Preset
         shell_exec('git init');
         $command->info('Git initialisé');
 
-        shell_exec('git add .');
-        shell_exec('git commit -m "Initial Commit"');
-
         // Base de données
         shell_exec('/Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot --execute="create database ' .$database.' character set UTF8mb4 collate utf8mb4_unicode_ci;"');
 
@@ -139,6 +136,10 @@ class PotassiumPreset extends Preset
         // Compilation des assets
         shell_exec('npm run dev');
         $command->info('Assets compilés');
+
+        shell_exec('git add .');
+        shell_exec('git commit -m "Initial Commit"');
+        $command->info('Premier commit effectué');
     }
 
 

@@ -1,0 +1,9 @@
+TODO
+- Unifier les couleurs
+- Utiliser les fonction Sass pour automatiser la déclaration des variables définies dans :root
+- Gérer l'affichage des avatars dans la page profile d'un user
+- Vérifier la commande @newPage
+- Nettoyer les commentaires inutiles
+- Vérifier les Observers
+- Css des tabs
+- Vérifier l'erreur avec les traductions (API)

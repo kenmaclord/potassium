@@ -39,7 +39,6 @@ class PotassiumServiceProvider extends ServiceProvider
             PotassiumPreset::launch($command);
 
             $command->info('Application installée');
-            $command->info('Au travail !');
         });
 
         // PresetCommand::macro('potassium-init', function($command){
