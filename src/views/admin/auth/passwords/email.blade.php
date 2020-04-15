@@ -1,4 +1,4 @@
-@extends('auth.layout')
+@extends('potassium::admin.auth.layout', ['url' => route('admin.password.email')])
 
 @section('title')
     {{env("APP_NAME")}} // Récupération du mot de passe
@@ -17,12 +17,12 @@
         @endif
     </p>
 
-    <button type="submit" class="button submit is-primary is-outlined">
+    <button type="submit" class="button submit is-outlined">
         <span>Envoyer une demande de réinitialisation</span>
     </button>
 
     @if(Session::has('status'))
-        <div class="notification is-success sent">
+        <div class="notification is-success sent mt-8">
             {!!nl2br(Session::get('status'))!!}
         </div>
     @endif

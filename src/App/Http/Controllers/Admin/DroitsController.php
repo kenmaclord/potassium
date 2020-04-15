@@ -2,7 +2,7 @@
 
 namespace Potassium\App\Http\Controllers\Admin;
 
-use Potassium\App\Entities\User;
+use App\Entities\User;
 use Potassium\App\Entities\Droit;
 use Potassium\App\Http\Controllers\Controller;
 

@@ -1,4 +1,4 @@
-@extends ("admin.layout", ['page'=> 'traductions'])
+@extends ("potassium::admin.layout", ['page'=>'traductions'])
 
 @section('content')
 	<div id="traductions" v-cloak>

@@ -1,9 +1,9 @@
-@extends('admin.layout', ['page'=>"user"])
+@extends ("potassium::admin.layout", ['page'=>'user'])
 
 @section('content')
   <div id="profile">
 	<div class="content">
-		@include('admin.pages.users.headerShow')
+		@include('potassium::admin.pages.users.headerShow')
 
 		<tabs :store="userStore">
 			<tab name="profile" title="Profile" :selected="true">

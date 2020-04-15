@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+.font {
+    font-family: var(-ff);
+    color: var(--color-black);
+}
+
+.regular{
+    @extend .font;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.italic{
+    @extend .font;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.bold{
+    @extend .font;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.bold-italic{
+    @extend .font;
+    font-weight: 700;
+    font-style: italic;
+}

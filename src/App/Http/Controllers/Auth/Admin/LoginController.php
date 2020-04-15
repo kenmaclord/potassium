@@ -2,10 +2,11 @@
 
 namespace Potassium\App\Http\Controllers\Auth\Admin;
 
-use Entities\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Entities\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Potassium\App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -38,6 +39,17 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        return view('potassium::admin.auth.login');
     }
 
     /**
@@ -119,5 +131,10 @@ class LoginController extends Controller
         $request->session()->invalidate();
 
         return $this->loggedOut($request) ?: redirect($this->redirectTo);
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('web');
     }
 }

@@ -144,7 +144,7 @@
 		}
 
 		&:nth-child(odd){
-			background-color: $grey-lighter;
+			background-color: var(--color-gray-400);
 		}
 
 		.legende{

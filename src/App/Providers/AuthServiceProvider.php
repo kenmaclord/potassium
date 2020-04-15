@@ -2,9 +2,7 @@
 
 namespace Potassium\App\Providers;
 
-use Potassium\App\Entities\User;
 use Potassium\App\Entities\Traduction;
-use Potassium\App\Policies\UserPolicy;
 use Potassium\App\Policies\TraductionPolicy;
 
 use Illuminate\Support\Facades\Gate;
@@ -18,7 +16,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        User::class => UserPolicy::class,
         Traduction::class => TraductionPolicy::class,
     ];
 

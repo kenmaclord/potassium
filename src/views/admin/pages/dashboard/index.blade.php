@@ -1,4 +1,4 @@
-@extends ("admin.layout", ['page'=>'dashboard'])
+@extends ("potassium::admin.layout", ['page'=>'dashboard'])
 
 @section('content')
   <div class="content">

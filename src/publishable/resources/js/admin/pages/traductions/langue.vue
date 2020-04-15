@@ -55,8 +55,6 @@
 </script>
 
 <style lang='scss'>
-  @import '../../../../sass/core/variables';
-
   .langue{
     min-height:  40px;
     margin-bottom: 10px;

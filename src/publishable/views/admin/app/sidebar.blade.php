@@ -10,11 +10,11 @@
 
 		{{-- @page --}}
 
-		@can('manage', [Entities\User::class, 'users'])
+		@can('manage', [App\Entities\User::class, 'users'])
 			<li><a href='/admin/utilisateurs'>Utilisateurs</a></li>
 		@endcan
 
-		@can('manage', [Entities\User::class, 'traductions'])
+		@can('manage', [App\Entities\User::class, 'traductions'])
 			<li><a href='/admin/traductions'>Traductions</a></li>
 		@endcan
 	</ul>

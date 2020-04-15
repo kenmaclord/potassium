@@ -157,13 +157,13 @@
 
 
 <style lang='scss' scoped>
-	@import "../../../sass/core/variables";
+	// @import "../../../sass/core/variables";
 
 	.addItem_liste{
 		margin-top: 15px;
 		height: 0px;
 		overflow: hidden;
-		transition: height $speed ease;
+		transition: height var(--speed) var(--ease);
 
 		&.open{
 			height: 122px;

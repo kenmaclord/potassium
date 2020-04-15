@@ -9,7 +9,7 @@ class PotassiumPreset extends Preset
 {
     protected static $command;
 
-    public static function prepare($command)
+    public static function configure($command)
     {
         $application = $command->ask("Quel est le nom de l'application ?");
         $url = $command->ask("Quel est l'url de l'application ? (http://domaine.com:port)");
@@ -26,55 +26,57 @@ class PotassiumPreset extends Preset
         static::setEnvironmentValue('MAIL_HOST', 'smtp.mailtrap.io');
         static::setEnvironmentValue('MAIL_PORT', '2525');
 
+        static::setEnvironmentValue('MAIL_USERNAME', 'b17cc32811a9cb');
+        static::setEnvironmentValue('MAIL_PASSWORD', '5c66a0d83de453');
+
+        static::setEnvironmentValue('MAIL_FROM_ADDRESS', 'info@domain.com');
+        static::setEnvironmentValue('MAIL_FROM_NAME', '${APP_NAME}');
+
         $command->info("Fichier d'environnement prêt");
 
         // Git
         shell_exec('git init');
         $command->info('Git initialisé');
 
+        shell_exec('git add .');
+        shell_exec('git commit -m "Initial Commit"');
+
         // Base de données
         shell_exec('/Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot --execute="create database ' .$database.' character set UTF8mb4 collate utf8mb4_unicode_ci;"');
+
         $command->info("Base de données créee");
 
-        // static::setAppFolder();
-        // static::setProviders();
-        // static::setTests();
-        // static::updateComposer($command);
+        static::cleanUp();
     }
 
-
-
-
-
-
-
-
-
-    public static function install($command)
+    public static function cleanUp()
     {
         if (file_exists($userModel = base_path('app/User.php'))) {
             unlink($userModel);
         }
 
-        static::updateComposer($command);
-        static::setDatabase($command);
-        static::updatePackages();
+        if (file_exists($exampleTestFile = base_path('tests/Feature/ExampleTest.php'))) {
+            unlink($exampleTestFile);
+        }
 
-        // shell_exec("composer dump-autoload");
+        if (file_exists($exampleTestFile = base_path('tests/Unit/ExampleTest.php'))) {
+            unlink($exampleTestFile);
+        }
 
-        // static::updateMix();
-        // static::setAssets();
-        // static::setStrategies();
-        // static::setConfigFiles();
-        // static::setFonts();
-        // static::setViews();
-        // static::setLangFile();
-        // static::setRoutes();
-        // static::setData();
-        // static::setKernel();
-        // static::setControllers();
-        // static::setCommands();
-   }
+        $migrationFiles = glob(base_path('/database/migrations/*.*'));
+
+        foreach ($migrationFiles as $m) {
+            if (strpos($m, "create_users_table")) {
+                unlink($m);
+            }
+        }
+    }
+
+
+    // public static function assets()
+    // {
+    //     static::updatePackages();
+    // }
 
 
     public static function updatePackageArray()
@@ -82,201 +84,61 @@ class PotassiumPreset extends Preset
         return [
             "axios" => "^0.19.*",
             "bulma" => "^0.8.*",
-            "laravel-mix" => "^5.*",
-            "mix-tailwindcss" => "^1.*",
-            "lodash" => "^4.*",
-            "moment" => "^2.*",
+            "cross-env" => "^7.*",
             "dropzone" => "^5.*",
+            "laravel-mix" => "^5.*",
+            "lodash" => "^4.*",
+            "mix-tailwindcss" => "^1.*",
+            "moment" => "^2.*",
             "promise-polyfill" => "8.*",
+            "resolve-url-loader" => "^3.1.0",
+            "sass" => "^1.26.3",
+            "sass-loader" => "^8.0.2",
             "sortablejs" => "^1.*",
             "tailwindcss" => "^1.*",
             "velocity-animate" => "^1.*",
-            "vue" => "^2.*"
+            "vue" => "^2.*",
+            "vue-template-compiler" => "^2.6.*"
         ];
     }
 
 
-    public static function updateComposer($command)
-    {
-        // static::copyFile('', 'composer.json', base_path());
-        shell_exec("composer update");
-        $command->info('Packages Composer à jour');
-    }
-
-
-    // public static function updateMix()
+    // public static function updateComposer($command)
     // {
-    //     static::copyFile('', 'webpack.mix.js', base_path());
+    //     shell_exec("composer update");
+    //     $command->info('Packages Composer à jour');
     // }
 
-
-    // public static function setAssets()
-    // {
-    //     static::copyDirectory('assets/js', 'resources');
-    //     static::copyDirectory('assets/sass', 'resources');
-    // }
-
-    // public static function setCommands()
-    // {
-    //     $files = [
-    //         "NewPageCommand.php",
-    //         "NamingStrategyCommand.php",
-    //         "PublishabilityStrategyCommand.php",
-    //         "UploadStrategyCommand.php"
-    //     ];
-
-    //     foreach ($files as $file) {
-    //         static::copyFile("commands", $file, base_path('app/Console/Commands'));
-    //     }
-    // }
-
-
-    // public static function setStrategies()
-    // {
-    //     static::copyDirectory('Strategies', 'app');
-    // }
-
-    // public static function setAppFolder()
-    // {
-    //     $folders = [
-    //         "Entities",
-    //         "Events",
-    //         "Helpers",
-    //         "Listeners",
-    //         "Notifications",
-    //         "Observers",
-    //         "Policies",
-    //         "Traits"
-    //     ];
-
-    //     foreach ($folders as $f) {
-    //         static::copyDirectory("App/{$f}", 'app');
-    //     }
-
-    //     if (file_exists($userModel = base_path('app/User.php'))) {
-    //         unlink($userModel);
-    //     }
-    // }
-
-    // public static function setConfigFiles()
-    // {
-    //     static::copyFile('config', 'app.php', base_path('config'));
-    //     static::copyFile('config', 'image.php', base_path('config'));
-    //     static::copyFile('config', 'laravellocalization.php', base_path('config'));
-    //     static::copyFile('config', 'auth.php', base_path('config'));
-    //     static::copyFile('config', 'filesystems.php', base_path('config'));
-    // }
 
     public static function setDatabase($command)
     {
-        // static::copyDirectory('database');
-
         \Artisan::call('migrate');
+        \Artisan::call('db:seed --class="Potassium\\\Database\\\Seeds\\\PackageDatabaseSeeder"');
 
         $command->info('Base de donnée prête');
     }
 
 
-    // public static function setFonts()
-    // {
-    //     static::copyDirectory('fonts', 'public');
-    // }
-
-
-    // public static function setProviders()
-    // {
-    //     static::copyFile('Providers', 'AppServiceProvider.php', base_path('app/Providers'));
-    //     static::copyFile('Providers', 'AuthServiceProvider.php', base_path('app/Providers'));
-    //     static::copyFile('Providers', 'ConfigServiceProvider.php', base_path('app/Providers'));
-    //     static::copyFile('Providers', 'EventServiceProvider.php', base_path('app/Providers'));
-    // }
-
-    // public static function setViews()
-    // {
-    //     static::copyDirectory('views', 'resources');
-    // }
-
-    // public static function setLangFile()
-    // {
-    //     static::copyFile('lang/fr', 'application.php', resource_path('lang/fr'));
-    //     static::copyFile('lang/fr', 'auth.php', resource_path('lang/fr'));
-    //     static::copyFile('lang/fr', 'pagination.php', resource_path('lang/fr'));
-    //     static::copyFile('lang/fr', 'passwords.php', resource_path('lang/fr'));
-    //     static::copyFile('lang/fr', 'validation.php', resource_path('lang/fr'));
-
-    //     static::copyFile('lang/en', 'application.php', resource_path('lang/en'));
-    // }
-
-    // public static function setRoutes()
-    // {
-    //     static::copyFile('', 'web.php', base_path('routes'));
-    //     static::copyFile('', 'api.php', base_path('routes'));
-    // }
-
-
-    // public static function setData()
-    // {
-    //     static::copyDirectory('data', 'public');
-    // }
-
-
-    // public static function setTests()
-    // {
-    //     static::copyFile('', 'phpunit.xml', base_path());
-    //     static::copyDirectory('tests', '');
-    // }
-
-
-    // public static function setKernel()
-    // {
-    //     static::copyFile('', 'Kernel.php', base_path('app/Http'));
-    // }
-
-    // public static function setControllers()
-    // {
-    //     static::copyDirectory('Controllers/Admin', 'app/Http/Controllers');
-    //     static::copyDirectory('Controllers/Front', 'app/Http/Controllers');
-    //     static::copyFile('Controllers', 'Controller.php', base_path('app/Http/Controllers'));
-    //     static::copyFile('Controllers/Auth', 'LoginController.php', base_path('app/Http/Controllers/Auth'));
-    //     static::copyFile('Controllers/Auth', 'RegisterController.php', base_path('app/Http/Controllers/Auth'));
-    //     static::copyFile('Controllers/Auth', 'ResetPasswordController.php', base_path('app/Http/Controllers/Auth'));
-    //     static::copyFile('Controllers/Auth', 'VerificationController.php', base_path('app/Http/Controllers/Auth'));
-    // }
-
-    /**
-     * En cas d'un ajout d'admin à posteriori
-     *
-     * @return  [type]  [description]
-     */
-    // public static function folders($command)
-    // {
-    //     static::setAppFolder();
-    //     static::setProviders();
-    //     static::setTests();
-    //     static::updateComposer($command);
-    // }
-
-    public static function assets($command)
+    public static function launch($command)
     {
+        shell_exec('composer dump-autoload');
+        $command->info('Autoload mis à jour');
+
+        static::setDatabase($command);
+
+        \Artisan::call('vendor:publish --provider="Potassium\\\PotassiumServiceProvider" --force');
+        $command->info('Application publiée');
+
+        static::updatePackages();
+        $command->info('package.json mis à jour');
+
         // Nodes modules
         shell_exec('npm install');
         $command->info('Paquets Node installés');
 
-        // Tailwind
-        $str = "En attente de tailwind...";
-
-        while(!file_exists("./node_modules/.bin/tailwind")){
-            $str.=".";
-            $command->info($str);
-            sleep(1);
-        }
-
-        shell_exec('./node_modules/.bin/tailwind init');
-        $command->info('Tailwind initialisé');
-
         // Compilation des assets
-        // shell_exec('npm run dev');
-        // $command->info('Assets compilés');
+        shell_exec('npm run dev');
+        $command->info('Assets compilés');
     }
 
 
@@ -320,44 +182,4 @@ class PotassiumPreset extends Preset
     {
         return explode("\n", (explode("{$key}=", $str))[1])[0];
     }
-
-
-    /**
-     * Copie un fichier d'un répertorie à un autre en vérifiant que le répertoire de destination existe
-     *
-     * @param   String  $file
-     * @param   String  $destFolder
-     * @param   String  $newName
-     *
-     * @return  Void
-     */
-    // public static function copyFile($srcFolder, $file, $destFolder, $newName=null)
-    // {
-    //     $baseFolder = __DIR__."/stubs/{$srcFolder}";
-
-    //     if (!file_exists($destFolder)) {
-    //         mkdir($destFolder);
-    //     }
-
-    //     $newName = $newName ?: $file;
-
-    //     copy("{$baseFolder}/{$file}", "{$destFolder}/{$newName}");
-    // }
-
-
-    /**
-     * Copie un dossier entier depuis le dossiers stubs
-     *
-     * @param   String  $folder
-     * @param   String  $destination
-     *
-     * @return  Void
-     */
-    // private static function copyDirectory($folder, $destination='')
-    // {
-    //     $src = __DIR__."/stubs/{$folder}";
-    //     $dest = base_path($destination);
-
-    //     return shell_exec("cp -r $src $dest");
-    // }
 }

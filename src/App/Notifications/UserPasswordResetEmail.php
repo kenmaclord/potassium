@@ -47,7 +47,7 @@ class UserPasswordResetEmail extends Notification
             ->subject('Réinitialisation de votre mot de passe')
             ->greeting('Bonjour,')
             ->line('Vous recevez cet email car nous avons reçu une demande de réinitialisation de votre mot de passe.')
-            ->action('Réinitialiser mon mot de passe', url(route('password.reset', $this->token, false)))
+            ->action('Réinitialiser mon mot de passe', url(route('admin.password.reset', $this->token, false)))
             ->line('Si vous recevez cet email sans l\'avoir demandé, merci de ne pas en tenir compte.');
     }
 

@@ -2,7 +2,7 @@
 
 namespace Potassium\App\Policies;
 
-use Potassium\App\Entities\User;
+use App\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TraductionPolicy
@@ -12,7 +12,7 @@ class TraductionPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \Entities\User  $user
+     * @param  App\Entities\User  $user
      *
      * @return mixed
      */

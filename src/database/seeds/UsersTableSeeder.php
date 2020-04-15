@@ -1,6 +1,7 @@
 <?php
+namespace Potassium\Database\Seeds;
 
-use Entities\User;
+use Potassium\App\Entities\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -17,10 +18,10 @@ class UsersTableSeeder extends Seeder
         factory(User::class)->create([
             'email' => 'potassium@gmail.com',
             'password' => bcrypt('potassium'),
-            'first_name' => 'Test',
+            'first_name' => 'Admin',
             'last_name' => 'User',
             'genre' => 'masculin',
-            'avatar' => 2,
+            'avatar' => 3,
             'locked' => 0,
             'order' => 0
         ]);

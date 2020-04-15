@@ -60,11 +60,11 @@
 |--------------------------------------------------------------------------
 */
 .black{
-    color: $black;
+    color: var(--color-black);
 }
 
 .white{
-    color: $white;
+    color: var(--color-white);
 }
 
 .cap{

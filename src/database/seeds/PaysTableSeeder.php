@@ -1,4 +1,5 @@
 <?php
+namespace Potassium\Database\Seeds;
 
 use Illuminate\Database\Seeder;
 

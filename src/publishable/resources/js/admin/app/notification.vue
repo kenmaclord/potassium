@@ -95,8 +95,6 @@ export default {
 
 
 <style lang='scss' scoped>
-  @import "../../../sass/core/variables";
-
   .alerts{
     position: fixed;
     top:100px;
@@ -112,13 +110,13 @@ export default {
       justify-content: center;
       align-items: center;
       position: relative;
-      color:white;
+      color: var(--color-white);
       padding: 15px;
       min-height:50px;
 
-      &--success{ background-color: $success; }
-      &--error{ background-color: $danger; }
-      &--info{ background-color: $info; }
+      &--success{ background-color: var(--color-green-600); }
+      &--error{ background-color: var(--color-red-600); }
+      &--info{ background-color: var(--color-blue-700); }
     }
   }
 

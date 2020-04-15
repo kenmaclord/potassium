@@ -1,4 +1,4 @@
-@extends('auth.layout')
+@extends('potassium::admin.auth.layout', ['url' => route('admin.login.post')])
 
 @section('title')
 	Connexion à l'admin
@@ -29,5 +29,5 @@
 		<span>Se connecter</span>
 	</button>
 
-	<a class="forgot" href={{ url('/password/reset') }}>J'ai oublié mon mot de passe</a>
+	<a class="forgot block mt-5 text-center" href={{ route('admin.password.request') }}>J'ai oublié mon mot de passe</a>
 @endsection

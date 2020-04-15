@@ -28,12 +28,12 @@ if (token) {
  *
  * @type  {[type]}
  */
-let api_token = document.head.querySelector('meta[name="api_token"]');
-if (token) {
-    window.axios.defaults.headers.common['Authorization'] = api_token.content;
-} else {
-    console.error('API token introuvable: https://laravel.com/docs/api-authentication');
-}
+// let api_token = document.head.querySelector('meta[name="api_token"]');
+// if (token) {
+//     window.axios.defaults.headers.common['Authorization'] = api_token.content;
+// } else {
+//     console.error('API token introuvable: https://laravel.com/docs/api-authentication');
+// }
 
 /**
  * Helper global pour afficher les notifications

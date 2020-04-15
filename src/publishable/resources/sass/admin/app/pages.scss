@@ -34,7 +34,7 @@
   align-items: center;
 
   &:nth-child(odd){
-    background-color: $grey-lighter;
+    background-color: var(--color-gray-400);
   }
 
   .intitule{ flex: 1; }
@@ -107,7 +107,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: $grey-lighter;
+      color: var(--color-gray-400);
       cursor: pointer;
     }
 

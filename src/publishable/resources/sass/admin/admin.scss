@@ -1,11 +1,14 @@
 /* Initialisation de l'application */
-@import "../core/reset";
-@import "../core/variables";
-@import "../core/core";
-@import "../core/typo";
+@import "node_modules/bulma/bulma";
+
+@import "../core/font-awesome/font-awesome.scss";
+@import "../core/font-mixin";
 @import "../core/tailwind";
 
-@import "app/app";
+@import "./core/typo";
+@import "./core/variables";
+
+@import "./core/common";
 
 /*
 |--------------------------------------------------------------------------

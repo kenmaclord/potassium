@@ -1,13 +1,15 @@
-@extends('auth.layout')
+@extends('potassium::admin.auth.layout', ['url' => route('admin.password.update')])
 
 @section('title')
     {{env("APP_NAME")}} // Récupération du mot de passe
 @endsection
 
 @section('content')
+    <input type="hidden" name="token" value="{{ $token }}">
+
     <label for="email" class="label">Adresse email</label>
     <p class="control has-icons-right">
-        <input class="input" name="email" type="text" autofocus value="{{request()->user ?? old('email')}}">
+        <input class="input" name="email" type="text" autofocus value="{{request('user') ?? old('email')}}">
         <span class="icon is-right">
             <i class="fa fa-at"></i>
         </span>
@@ -38,7 +40,7 @@
         @endif
     </p>
 
-    <button type="submit" class="button submit is-primary is-outlined">
+    <button type="submit" class="button submit is-outlined">
         <span>Réinitialiser le mot de passe</span>
     </button>
 @endsection

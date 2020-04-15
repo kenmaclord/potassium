@@ -1,81 +1,78 @@
 <template>
-	<div class="zone">
-		<div class="draggable-handle">
-			<span class="icon is-small">
-				<i class="fa fa-bars"></i>
-			</span>
-		</div>
+    <div class="zone">
+        <div class="draggable-handle">
+            <span class="icon is-small">
+                <i class="fa fa-bars"></i>
+            </span>
+        </div>
 
-		<edit-in-place
-			:id="zone.id"
-			:url="`/admin/traductions/zones/${zone.id}`"
-			:text="zone.nom"
-			context="zones"
-			emptyText="Cliquer pour saisir une légende..."
-			message="Nom du filtre modifié"
-			field="nom"
-			input-class="input"
-			text-class="textToDisplay"
-		></edit-in-place>
+        <edit-in-place
+            :id="zone.id"
+            :url="`/admin/traductions/zones/${zone.id}`"
+            :text="zone.nom"
+            context="zones"
+            emptyText="Cliquer pour saisir une légende..."
+            message="Nom du filtre modifié"
+            field="nom"
+            input-class="input"
+            text-class="textToDisplay"
+        ></edit-in-place>
 
-		<div class="actions">
-			<a class="button is-danger" @click="deleteConfirmation">
-				<span class="icon is-small">
-					<i class="fa fa-trash"></i>
-				</span>
-			</a>
-		</div>
-	</div>
+        <div class="actions">
+            <a class="button is-danger" @click="deleteConfirmation">
+                <span class="icon is-small">
+                    <i class="fa fa-trash"></i>
+                </span>
+            </a>
+        </div>
+    </div>
 </template>
 
 <script>
-	import editInPlace   from '../../app/editInPlace.vue'
+    import editInPlace   from '../../app/editInPlace.vue'
 
 
-	export default {
-    	components: {editInPlace},
+    export default {
+        components: {editInPlace},
 
-		/*
-		|--------------------------------------------------------------------------
-		| Gestion des data du composant (props, data, computed et watch)
-		|--------------------------------------------------------------------------
-		*/
-		props : ['dataZone'],
+        /*
+        |--------------------------------------------------------------------------
+        | Gestion des data du composant (props, data, computed et watch)
+        |--------------------------------------------------------------------------
+        */
+        props : ['dataZone'],
 
-		data(){
-			return {
-				zone: this.dataZone,
-			}
-		},
+        data(){
+            return {
+                zone: this.dataZone,
+            }
+        },
 
 
-		/*
-		|--------------------------------------------------------------------------
-		| Méthode d'initialisation
-		|--------------------------------------------------------------------------
-		*/
-		created(){},
+        /*
+        |--------------------------------------------------------------------------
+        | Méthode d'initialisation
+        |--------------------------------------------------------------------------
+        */
+        created(){},
 
-		mounted(){},
+        mounted(){},
 
-		/*
-		|--------------------------------------------------------------------------
-		| Méthodes du composant
-		|--------------------------------------------------------------------------
-		*/
-		methods:{
-			deleteConfirmation(){
-				Event.fire('confirmation', {'element': this.zone, 'context' : 'zones'})
-			}
-		}
-	}
+        /*
+        |--------------------------------------------------------------------------
+        | Méthodes du composant
+        |--------------------------------------------------------------------------
+        */
+        methods:{
+            deleteConfirmation(){
+                Event.fire('confirmation', {'element': this.zone, 'context' : 'zones'})
+            }
+        }
+    }
 </script>
 
 
 <style scoped lang='scss'>
-
-  @import '../../../../sass/core/variables';
-
   .zone{
     display: flex;
     margin-bottom: 15px;
@@ -83,21 +80,21 @@
     align-items: center;
 
     &:nth-child(odd){
-      background-color: $grey-lighter;
+      background-color: var(--color-gray-100);
     }
 
-	.draggable-handle .icon.is-small, .draggable-handle .icon.is-small .fa, .draggable-handle{
-		cursor: grab;
+    .draggable-handle .icon.is-small, .draggable-handle .icon.is-small .fa, .draggable-handle{
+        cursor: grab;
 
-		&:active {
-			cursor: grabbing;
-		}
-	}
+        &:active {
+            cursor: grabbing;
+        }
+    }
 
-	.draggable-handle{
-		width: 25px;
-		text-align: center;
-	}
+    .draggable-handle{
+        width: 25px;
+        text-align: center;
+    }
 
     .edit-in-place{
       flex: 1;
@@ -105,11 +102,11 @@
     }
 
     .types{
-    	flex: 1;
+        flex: 1;
 
-    	select{
-    		width: 100%;
-    	}
+        select{
+            width: 100%;
+        }
     }
 
     .actions{
@@ -121,7 +118,7 @@
 
             &.disable{
                 opacity: 0.5;
-                background-color: #AAA;
+                background-color: var(--color-disabled);
             }
         }
     }

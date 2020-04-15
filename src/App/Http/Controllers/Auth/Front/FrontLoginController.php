@@ -2,7 +2,7 @@
 
 namespace Potassium\App\Http\Controllers\Auth\Front;
 
-use Potassium\App\Entities\User;
+use App\Entities\User;
 use Potassium\App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Lang;
@@ -119,5 +119,10 @@ class FrontLoginController extends Controller
         $request->session()->invalidate();
 
         return $this->loggedOut($request) ?: redirect($this->redirectTo);
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('customer');
     }
 }

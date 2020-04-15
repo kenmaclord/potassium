@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Cache;
     function isPublishable($entity)
     {
         $namespace = 'App\\Strategies\\Publishability\\';
-        $classname = str_replace("Entities\\", '', get_class($entity)).'PublishabilityStrategy';
+        $classname = str_replace("App\\Entities\\", '', get_class($entity)).'PublishabilityStrategy';
 
         $publishabilityClass = $namespace.$classname;
 

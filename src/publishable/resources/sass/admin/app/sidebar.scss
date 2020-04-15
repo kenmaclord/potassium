@@ -1,8 +1,9 @@
-.sidebar{
-  background-color: $color1;
+#admin .sidebar{
+  background-color: var(--color-primary);
   min-width: 210px;
   max-width: 250px;
   width: 25%;
+  min-height: 100vh;
   padding-top: 20px;
 
   .logo{
@@ -10,27 +11,27 @@
     margin-bottom: 53px;
 
     h1{
-      color: $color3!important;
+      color: var(--color-gray-100)!important;
     }
   }
 
   ul li {
     padding-left: 20px;
-    background-color: darken($color1,2);
-    height: 35px;
-    margin-bottom: 5px;
+    background-color: var(--color-primary-dark);
+    height: 45px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
 
     &:hover{
       cursor: pointer;
-      background-color: lighten($color1,10);
+      background-color: var(--color-primary-light);
     }
 
     a{
       display: inline-block;
       width: 100%;
-      color: $color3;
+      color: var(--color-white);
       text-decoration: none;
     }
   }

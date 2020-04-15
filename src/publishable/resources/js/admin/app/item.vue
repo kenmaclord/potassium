@@ -159,7 +159,7 @@
 
 <style scoped lang='scss'>
 
-  @import '../../../sass/core/variables';
+  // @import '../../../sass/core/variables';
 
   .item{
     display: flex;
@@ -173,7 +173,7 @@
     }
 
     &:nth-child(even){
-      background-color: $grey-lighter;
+      background-color: var(--color-gray-100);
     }
 
     .draggable-handle .icon.is-small, .draggable-handle .icon.is-small .fa, .draggable-handle{

@@ -1,0 +1,132 @@
+:root {
+    --ease: cubic-bezier(.76,0,.17,1);
+    --br: 4px;
+    --speed: 400ms;
+    --ff: 'Merriweather Sans', sans-serif;
+
+    --screen-sm: 576px;
+    --screen-md: 768px;
+    --screen-lg: 1024px;
+    --screen-xl: 1200px;
+    --screen-xxl: 1366px;
+
+    --color-primary: hsl(208,17%,19%);
+    --color-primary-dark: hsl(208,17%,14%);
+    --color-primary-light: hsl(208,17%,25%);
+
+
+    --color-disabled: hsl(0,0%,70%);
+
+    --color-black: hsl(0,0%,0%);
+    --color-white: hsl(0,0%,100%);
+
+
+    --color-gray-100: hsl(0,0%,93%);
+    --color-gray-200: hsl(0,0%,80%);
+    --color-gray-300: hsl(0,0%,70%);
+    --color-gray-400: hsl(0,0%,60%);
+    --color-gray-500: hsl(0,0%,50%);
+    --color-gray-600: hsl(0,0%,40%);
+    --color-gray-700: hsl(0,0%,30%);
+    --color-gray-800: hsl(0,0%,20%);
+    --color-gray-900: hsl(0,0%,10%);
+
+    // Red
+    --color-red-100: hsl(0,60%,90%);
+    --color-red-200: hsl(0,60%,80%);
+    --color-red-300: hsl(0,60%,70%);
+    --color-red-400: hsl(0,60%,60%);
+    --color-red-500: hsl(0,60%,50%);
+    --color-red-600: hsl(0,60%,40%);
+    --color-red-700: hsl(0,60%,30%);
+    --color-red-800: hsl(0,60%,20%);
+    --color-red-900: hsl(0,60%,10%);
+
+    // Orange
+    --color-orange-100: hsl(30,70%,90%);
+    --color-orange-200: hsl(30,70%,80%);
+    --color-orange-300: hsl(30,70%,70%);
+    --color-orange-400: hsl(30,70%,60%);
+    --color-orange-500: hsl(30,70%,50%);
+    --color-orange-600: hsl(25,70%,47%);
+    --color-orange-700: hsl(20,70%,40%);
+    --color-orange-800: hsl(25,80%,30%);
+    --color-orange-900: hsl(25,80%,22%);
+
+    // Yellow
+    --color-yellow-100: hsl(50,80%,90%);
+    --color-yellow-200: hsl(50,80%,80%);
+    --color-yellow-300: hsl(50,80%,70%);
+    --color-yellow-400: hsl(50,80%,60%);
+    --color-yellow-500: hsl(50,80%,50%);
+    --color-yellow-600: hsl(47,80%,45%);
+    --color-yellow-700: hsl(45,80%,40%);
+    --color-yellow-800: hsl(45,80%,30%);
+    --color-yellow-900: hsl(45,80%,20%);
+
+    // Green
+    --color-green-100: hsl(140,50%,90%);
+    --color-green-200: hsl(140,50%,80%);
+    --color-green-300: hsl(140,50%,70%);
+    --color-green-400: hsl(140,50%,60%);
+    --color-green-500: hsl(140,50%,50%);
+    --color-green-600: hsl(140,50%,40%);
+    --color-green-700: hsl(140,50%,30%);
+    --color-green-800: hsl(140,50%,20%);
+    --color-green-900: hsl(140,50%,10%);
+
+    // Teal
+    --color-teal-100: hsl(175,50%,90%);
+    --color-teal-200: hsl(175,50%,80%);
+    --color-teal-300: hsl(175,50%,70%);
+    --color-teal-400: hsl(175,50%,60%);
+    --color-teal-500: hsl(175,50%,50%);
+    --color-teal-600: hsl(175,50%,40%);
+    --color-teal-700: hsl(175,50%,30%);
+    --color-teal-800: hsl(175,50%,20%);
+    --color-teal-900: hsl(175,50%,10%);
+
+    // Blue
+    --color-blue-100: hsl(220,60%,95%);
+    --color-blue-200: hsl(220,60%,85%);
+    --color-blue-300: hsl(220,60%,75%);
+    --color-blue-400: hsl(220,60%,65%);
+    --color-blue-500: hsl(220,60%,55%);
+    --color-blue-600: hsl(220,60%,45%);
+    --color-blue-700: hsl(220,60%,35%);
+    --color-blue-800: hsl(220,60%,25%);
+    --color-blue-900: hsl(220,60%,15%);
+
+    // Indigo
+    --color-indigo-100: hsl(230,30%,95%);
+    --color-indigo-200: hsl(230,30%,85%);
+    --color-indigo-300: hsl(230,30%,75%);
+    --color-indigo-400: hsl(230,30%,65%);
+    --color-indigo-500: hsl(230,30%,55%);
+    --color-indigo-300: hsl(230,30%,45%);
+    --color-indigo-700: hsl(238,42%,49%);
+    --color-indigo-800: hsl(240,35%,37%);
+    --color-indigo-900: hsl(250,30%,30%);
+
+    // Purple
+    --color-purple-100: hsl(260,40%,90%);
+    --color-purple-200: hsl(260,40%,80%);
+    --color-purple-400: hsl(260,40%,70%);
+    --color-purple-400: hsl(260,40%,60%);
+    --color-purple-500: hsl(260,40%,50%);
+    --color-purple-600: hsl(260,40%,45%);
+    --color-purple-700: hsl(260,40%,40%);
+    --color-purple-800: hsl(260,40%,35%);
+    --color-purple-900: hsl(260,40%,30%);
+
+    // Pink
+    --color-pink-100: hsl(325,60%,95%);
+    --color-pink-200: hsl(340,50%,85%);
+    --color-pink-300: hsl(335,50%,80%);
+    --color-pink-400: hsl(335,60%,70%);
+    --color-pink-500: hsl(332,60%,60%);
+    --color-pink-600: hsl(325,60%,45%);
+    --color-pink-700: hsl(325,60%,40%);
+    --color-pink-800: hsl(325,60%,35%);
+    --color-pink-900: hsl(320,60%,30%);
+}

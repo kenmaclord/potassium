@@ -1,18 +1,6 @@
 {
     "name": "kenmaclord/potassium",
-    "description": "Base simple admin for my projects",
-    "type": "project",
-    "require": {
-        "intervention/image": "^2.5",
-        "mcamara/laravel-localization": "^1.5",
-        "caouecs/laravel-lang": "^6.0"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^4.7",
-        "fzaninotto/faker": "^1.9",
-        "mockery/mockery": "^1.3",
-        "phpunit/phpunit": "^8.5"
-    },
+    "description": "Simple base admin for my projects",
     "license": "MIT",
     "authors": [
         {
@@ -20,12 +8,26 @@
             "email": "karl.morisset.register@gmail.com"
         }
     ],
+    "minimum-stability": "stable",
+    "require": {
+        "intervention/image": "^2.5",
+        "mcamara/laravel-localization": "^1.5",
+        "caouecs/laravel-lang": "^6.0"
+    },
     "autoload": {
         "psr-4": {
             "Potassium\\": "src"
         },
         "files": [
             "src/App/Helpers/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Potassium\\Tests\\": "src/tests/"
+        },
+        "files": [
+            "src/tests/utilities/functions.php"
         ]
     },
     "extra": {

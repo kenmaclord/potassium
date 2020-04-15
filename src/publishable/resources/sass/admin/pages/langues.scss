@@ -1,7 +1,7 @@
 #langues{
   .langue{
     &:nth-child(even){
-      background-color: $grey-lighter;
+      background-color: var(--color-gray-100);
     }
   }
 

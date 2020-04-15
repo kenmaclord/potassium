@@ -1,6 +1,8 @@
 <?php
+namespace Potassium\Database\Seeds;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class TestDatabaseSeeder extends Seeder
 {

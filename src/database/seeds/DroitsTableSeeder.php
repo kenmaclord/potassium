@@ -1,7 +1,8 @@
 <?php
+namespace Potassium\Database\Seeds;
 
-use Entities\User;
-use Entities\Droit;
+use Potassium\App\Entities\User;
+use Potassium\App\Entities\Droit;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -23,8 +24,8 @@ class DroitsTableSeeder extends Seeder
 			'slug' => 'users',
 			'description' => 'Gérer les utilisateurs'
 		]);
-
 		$user->droits()->attach($droit);
+
 
 		$droit = factory(Droit::class)->create([
 			'slug' => 'traductions',

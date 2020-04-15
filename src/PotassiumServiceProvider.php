@@ -3,29 +3,22 @@
 namespace Potassium;
 
 use Dotenv\Dotenv;
+use App\Observers\Observers;
 use Potassium\PotassiumPreset;
 use Illuminate\Support\Facades\Schema;
-use Potassium\App\Observers\Observers;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Console\PresetCommand;
+
 use Potassium\App\Providers\AuthServiceProvider;
 use Potassium\App\Providers\EventServiceProvider;
-use Potassium\App\Console\Commands\NewPageCommand;
 use Potassium\App\Providers\ConfigServiceProvider;
-use Potassium\App\Http\Controllers\Admin\HomeController;
-use Potassium\App\Console\Commands\NamingStrategyCommand;
-use Potassium\App\Console\Commands\UploadStrategyCommand;
-use Potassium\App\Http\Controllers\Admin\UsersController;
-use Potassium\App\Http\Controllers\Admin\ZonesController;
-use Potassium\App\Http\Controllers\Admin\DroitsController;
-use Potassium\App\Http\Controllers\Admin\LanguesController;
-use Potassium\App\Console\Commands\ProcessingStrategyCommand;
-use Potassium\App\Http\Controllers\Admin\DashboardController;
-use Potassium\App\Http\Controllers\Admin\TraductionsController;
-use Potassium\App\Console\Commands\PublishabilityStrategyCommand;
-use Potassium\App\Http\Controllers\Front\FrontTraductionsController;
-use Potassium\App\Http\Controllers\Admin\TraductionsContentController;
+
+use Potassium\App\Commands\NewPageCommand;
+use Potassium\App\Commands\NamingStrategyCommand;
+use Potassium\App\Commands\UploadStrategyCommand;
+use Potassium\App\Commands\ProcessingStrategyCommand;
+use Potassium\App\Commands\PublishabilityStrategyCommand;
 
 class PotassiumServiceProvider extends ServiceProvider
 {
@@ -36,26 +29,18 @@ class PotassiumServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        PresetCommand::macro('potassium-init', function($command){
-            PotassiumPreset::prepare($command);
-            $command->info('Application initialisée');
+        PresetCommand::macro('potassium-configure', function($command){
+            PotassiumPreset::configure($command);
+            $command->info('Application configurée');
         });
 
         PresetCommand::macro('potassium-install', function($command){
-            PotassiumPreset::install($command);
-            $command->info('Architecture créée');
-
             // Node modules + Compilation des assets
-            PotassiumPreset::assets($command);
+            PotassiumPreset::launch($command);
+
             $command->info('Application installée');
             $command->info('Au travail !');
         });
-
-        $this->init();
-
-        $this->loaders();
-
-        $this->publishes();
 
         // PresetCommand::macro('potassium-init', function($command){
         //     PotassiumPreset::prepare($command);
@@ -66,27 +51,29 @@ class PotassiumServiceProvider extends ServiceProvider
         //     PotassiumPreset::folders($command);
         //     $command->info('Dossiers installés');
         // });
-
+        $this->init();
+        $this->loaders();
+        $this->publishCommands();
     }
 
 
     public function register()
     {
-        $this->app->make(DashboardController::class);
-        $this->app->make(DroitsController::class);
-        $this->app->make(HomeController::class);
-        $this->app->make(LanguesController::class);
-        $this->app->make(TraductionsContentController::class);
-        $this->app->make(TraductionsController::class);
-        $this->app->make(UsersController::class);
-        $this->app->make(ZonesController::class);
+        // $this->app->make(DashboardController::class);
+        // $this->app->make(DroitsController::class);
+        // $this->app->make(HomeController::class);
+        // $this->app->make(LanguesController::class);
+        // $this->app->make(TraductionsContentController::class);
+        // $this->app->make(TraductionsController::class);
+        // $this->app->make(UsersController::class);
+        // $this->app->make(ZonesController::class);
 
-        $this->app->make(FrontController::class);
-        $this->app->make(FrontTraductionsController::class);
+        // $this->app->make(FrontController::class);
+        // $this->app->make(FrontTraductionsController::class);
 
-        $this->app->register(EventServiceProvider::class);
-        $this->app->register(ConfigServiceProvider::class);
-        $this->app->register(AuthServiceProvider::class);
+        // $this->app->register(EventServiceProvider::class);
+        // $this->app->register(ConfigServiceProvider::class);
+        // $this->app->register(AuthServiceProvider::class);
     }
 
 
@@ -108,8 +95,11 @@ class PotassiumServiceProvider extends ServiceProvider
             \DB::statement(\DB::raw('PRAGMA foreign_keys=1'));
         }
 
-        $observers = new Observers();
-        $observers->register();
+
+        if (file_exists(base_path('app/Observers/Observers.php'))) {
+            $observers = new Observers();
+            $observers->register();
+        }
     }
 
 
@@ -117,8 +107,9 @@ class PotassiumServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
         $this->loadRoutesFrom(__DIR__.'/routes/api.php');
-        $this->loadMigrationsFrom(__DIR__.'/framework/database/migrations');
-        $this->loadViewsFrom(__DIR__.'/framework/views', 'potassium');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->loadViewsFrom(__DIR__.'/views', 'potassium');
+        $this->loadFactoriesFrom(__DIR__.'/database/factories', 'potassium');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -132,10 +123,16 @@ class PotassiumServiceProvider extends ServiceProvider
     }
 
 
-    public function publishes()
+    public function publishCommands()
     {
+        $this->publishes([
+            __DIR__.'/publishable/entities' => base_path('app/Entities')
+        ], 'models');
+
+
         // Fichiers de configuration
         $this->publishes([
+            __DIR__.'/publishable/config/app.php' => config_path('app.php'),
             __DIR__.'/publishable/config/auth.php' => config_path('auth.php'),
             __DIR__.'/publishable/config/image.php' => config_path('image.php'),
             __DIR__.'/publishable/config/laravellocalization.php' => config_path('laravellocalization.php'),
@@ -150,26 +147,88 @@ class PotassiumServiceProvider extends ServiceProvider
         ], 'views');
 
 
-        // Data
+        // Public Data
         $this->publishes([
             __DIR__.'/publishable/data' => public_path('data'),
             __DIR__.'/publishable/fonts' => public_path('fonts'),
-            __DIR__.'/publishable/resources/js' => public_path('js'),
-            __DIR__.'/publishable/resources/sass' => public_path('sass')
+            __DIR__.'/publishable/resources/js' => resource_path('js'),
+            __DIR__.'/publishable/resources/sass' => resource_path('sass')
         ], 'public');
+
+
+        // Assets
+        $this->publishes([
+            __DIR__.'/publishable/resources/js' => resource_path('js'),
+            __DIR__.'/publishable/resources/sass' => resource_path('sass')
+        ], 'assets');
+
+
+        // Database
+        $this->publishes([
+            __DIR__.'/publishable/database/factories/UserFactory.php' => base_path('database/factories/UserFactory.php'),
+            __DIR__.'/publishable/database/seeds/TestDatabaseSeeder.php' => base_path('database/seeds/TestDatabaseSeeder.php'),
+            __DIR__.'/publishable/database/migrations/2017_10_07_000000_create_users_table.php' => base_path('database/migrations/2017_10_07_000000_create_users_table.php'),
+        ], 'database');
 
 
         // Http
         $this->publishes([
-            __DIR__.'/publishable/Kernel.php' => base_path('app/Http/Controllers/Kernel.php')
+            __DIR__.'/publishable/app/Kernel.php' => base_path('app/Http/Kernel.php'),
+            __DIR__.'/publishable/app/RedirectIfAuthenticated.php' => base_path('app/Http/Middleware/RedirectIfAuthenticated.php'),
+            __DIR__.'/publishable/app/Authenticate.php' => base_path('app/Http/Middleware/Authenticate.php')
         ], 'http');
+
+
+        // Controllers
+        $this->publishes([
+            __DIR__.'/publishable/controllers/admin/ApiController.php' => base_path('app/Http/Controllers/Admin/ApiController.php'),
+            __DIR__.'/publishable/controllers/admin/DashboardController.php' => base_path('app/Http/Controllers/Admin/DashboardController.php'),
+            __DIR__.'/publishable/controllers/admin/UsersController.php' => base_path('app/Http/Controllers/Admin/UsersController.php'),
+            __DIR__.'/publishable/controllers/front/FrontController.php' => base_path('app/Http/Controllers/Front/FrontController.php'),
+            __DIR__.'/publishable/controllers/front/FrontTraductionsController.php' => base_path('app/Http/Controllers/Front/FrontTraductionsController.php')
+        ], 'controllers');
+
+
+        // Obervers
+        $this->publishes([
+            __DIR__.'/publishable/observers' => base_path('app/Observers')
+        ], 'observers');
+
+
+        // Policies
+        $this->publishes([
+            __DIR__.'/publishable/policies' => base_path('app/Policies')
+        ], 'policies');
+
+
+        // Providers
+        $this->publishes([
+            __DIR__.'/publishable/providers/EventServiceProvider.php' => base_path('app/Providers/EventServiceProvider.php'),
+            __DIR__.'/publishable/providers/ConfigServiceProvider.php' => base_path('app/Providers/ConfigServiceProvider.php'),
+            __DIR__.'/publishable/providers/AuthServiceProvider.php' => base_path('app/Providers/AuthServiceProvider.php')
+        ], 'providers');
+
+
+        // Routes
+        $this->publishes([
+            __DIR__.'/publishable/routes/web.php' => base_path('routes/web.php'),
+            __DIR__.'/publishable/routes/partials/admin/users.php' => base_path('routes/partials/admin/users.php')
+        ], 'routes');
+
+
+        // Strategies
+        $this->publishes([
+            __DIR__.'/publishable/strategies' => base_path('app/Strategies'),
+        ], 'strategies');
 
 
         // Fichiers de langues
         $this->publishes([
-            __DIR__.'/publishable/lang/en/applications' => base_path('resources/lang/en/applications.php'),
-            __DIR__.'/publishable/lang/fr/applications' => base_path('resources/lang/fr/applications.php')
+            base_path('/vendor/caouecs/laravel-lang/src/fr') => base_path('resources/lang/fr'),
+            __DIR__.'/publishable/lang/en/application.php' => base_path('resources/lang/en/application.php'),
+            __DIR__.'/publishable/lang/fr/application.php' => base_path('resources/lang/fr/application.php')
         ], 'lang');
+
 
         // Fichiers de tests
         $this->publishes([
@@ -179,9 +238,9 @@ class PotassiumServiceProvider extends ServiceProvider
 
         // Fichiers du base_path
         $this->publishes([
-            __DIR__.'/publishable/phpunit.xml' => base_path('phpunit.xml'),
-            __DIR__.'/publishable/webpack.mix.js' => base_path('webpack.mix.js'),
-            __DIR__.'/publishable/tailwind.js' => base_path('tailwind.js')
+            __DIR__.'/publishable/root/phpunit.xml' => base_path('phpunit.xml'),
+            __DIR__.'/publishable/root/webpack.mix.js' => base_path('webpack.mix.js'),
+            __DIR__.'/publishable/root/tailwind.config.js' => base_path('tailwind.config.js')
         ]);
     }
 }

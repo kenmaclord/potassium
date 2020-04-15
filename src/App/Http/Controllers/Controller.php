@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Potassium\App\Http\Controllers;
 
-use App\Traits\AjaxResponder;
+use Potassium\App\Traits\AjaxResponder;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;

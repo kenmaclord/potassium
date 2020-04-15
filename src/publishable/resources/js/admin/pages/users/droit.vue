@@ -71,9 +71,6 @@
 
 
 <style scoped lang='scss'>
-
-	@import '../../../../sass/core/variables';
-
 	.droit{
 		display: flex;
 		height: 45px;
@@ -83,7 +80,7 @@
 		cursor: pointer;
 
 		&:nth-child(odd){
-			background-color: #EEE;
+			background-color: var(--color-gray-100);
 		}
 
 		.description{
@@ -94,16 +91,13 @@
 		.checkbox{
 			height: 20px;
 			width: 20px;
-			border: 1px solid black;
+			border: 1px solid var(--color-black);
 			background-color: transparent;
 			transition: background-color 0.3s ease;
 
 			&.granted{
-				background-color: black;
+				background-color: var(--color-black);
 			}
 		}
 	}
-
-
-
 </style>

@@ -189,7 +189,7 @@
 
 
 <style lang='scss' scoped>
-	@import "../../../sass/core/variables";
+	// @import "../../../sass/core/variables";
 
 	.add-section{
 		margin-bottom: 30px;
@@ -199,7 +199,7 @@
 	.addItem{
 		margin-top: 15px;
 		overflow: hidden;
-		transition: all $speed ease;
+		transition: all var(--speed) var(--ease);
 
 		&.close{
 			height: 0px;

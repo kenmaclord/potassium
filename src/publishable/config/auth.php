@@ -72,12 +72,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Entities\User::class,
+            'model' => App\Entities\User::class,
         ],
 
         'customers' => [
             'driver' => 'eloquent',
-            'model' => Entities\Customer::class,
+            'model' => App\Entities\Customer::class,
         ],
 
         // 'users' => [

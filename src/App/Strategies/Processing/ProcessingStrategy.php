@@ -2,9 +2,9 @@
 
 namespace Potassium\App\Strategies\Processing;
 
-use Potassium\App\ntities\Home;
 use Potassium\App\Traits\ClassUtilities;
 use Potassium\App\Traits\ImageTreatment;
+
 use Illuminate\Support\Facades\Storage;
 
 class ProcessingStrategy

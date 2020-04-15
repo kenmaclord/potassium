@@ -2,7 +2,7 @@
 
 namespace Potassium\App\Entities;
 
-use Potassium\App\Entities\User;
+use App\Entities\User;
 use Potassium\App\Entities\Entity;
 
 class Droit extends Entity
