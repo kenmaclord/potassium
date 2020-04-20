@@ -51,8 +51,8 @@ class NewPageCommand extends Command
         }
 
         $this->modelFile = ucwords($model).".php";
-        $this->model = "\Entities\\".ucwords($model);
-        $this->modelForController = "\Entities\\\\".ucwords($model);
+        $this->model = "\App\Entities\\".ucwords($model);
+        $this->modelForController = "App\\Entities\\\\".ucwords($model);
 
         $this->makeView();
         $this->makeJs();
@@ -140,7 +140,7 @@ class NewPageCommand extends Command
     {
         $routes = base_path("routes/web.php");
         $placeholder = "// @PageRoutes";
-        $template = "/**\n\t* Routes pour les ".ucwords($this->page)."\n\t*/\n\tRoute::group(['prefix'=>'{$this->page}', 'middleware' => 'can:manage,Entities\User'], function(){\n\t\tRoute::get('/', '".ucwords($this->page)."Controller@index');\n\t});\n\n\t{$placeholder}";
+        $template = "/**\n\t* Routes pour les ".ucwords($this->page)."\n\t*/\n\tRoute::group(['prefix'=>'{$this->page}', 'middleware' => 'can:manage,App\Entities\User'], function(){\n\t\tRoute::get('/', '".ucwords($this->page)."Controller@index');\n\t});\n\n\t{$placeholder}";
 
         $this->replace($routes, $placeholder, $template);
     }
