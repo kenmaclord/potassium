@@ -5,14 +5,14 @@
 
 	<add-section
 		button-text="Ajouter une zone"
-		route-create="/admin/traductions/zones"
+		route-create="/admin/zones"
 		:fields="[
 			{titre: 'Nom de la zone', name: 'nom', type: 'text'}
 		]"
 		nullable="[]">
 	</add-section>
 
-	<div class="zones" v-sortable="options">
+	<div class="zones">
 		<zone
 			:data-zone="zone"
 			v-for="zone in zones"

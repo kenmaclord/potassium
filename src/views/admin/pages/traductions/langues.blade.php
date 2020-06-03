@@ -4,14 +4,14 @@
 	</div>
 
 	<div class="langue head">
-		<div class="field head nom">Nom</div>
-		<div class="field head traduction">Traduction</div>
-		<div class="field head code">Code</div>
-		<div class="field head visible">
+		<div class="col head nom">Nom</div>
+		<div class="col head traduction">Traduction</div>
+		<div class="col head code">Code</div>
+		<div class="col head visible">
 			<span class="desktop">Visible par le public</span>
 			<span class="phone">Public</span>
 		</div>
-		<div class="field head available">
+		<div class="col head available">
 			<span class="desktop">Disponible dans l'admin</span>
 			<span class="phone">Admin</span>
 		</div>

@@ -17,7 +17,7 @@
         @endif
     </p>
 
-    <button type="submit" class="button submit is-outlined">
+    <button type="submit" class="button submit is-primary is-outlined">
         <span>Envoyer une demande de réinitialisation</span>
     </button>
 

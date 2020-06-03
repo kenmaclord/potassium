@@ -5,15 +5,15 @@ namespace Potassium\App\Http\Controllers\Admin;
 use Potassium\App\Entities\Langue;
 use Potassium\App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Cache;
+
 class LanguesController extends Controller
 {
 	public function index()
 	{
-		if(request()->wantsJson())
-		{
-			return Langue::all();
-		}
+		return Langue::all();
 	}
+
 
 	/**
 	* Met à jour la visibilité d'une langue
@@ -39,7 +39,7 @@ class LanguesController extends Controller
 	*/
 	public function toggleAvailability(Langue $langue)
 	{
-		$langue->update(['available'=> request()->availability]);
+		$langue->update(['available'=> request('availability')]);
 
 		return $this->respond('Disponibilité mise à jour');
 	}
@@ -52,7 +52,7 @@ class LanguesController extends Controller
 	 */
 	public function visible()
 	{
-		return Langue::visible()->orderBy('order')->get();
+		return Langue::visible()->get();
 	}
 
 
@@ -63,6 +63,22 @@ class LanguesController extends Controller
 	 */
 	public function available()
 	{
-		return Langue::available()->orderBy('order')->get();
+		return Langue::available()->get();
+	}
+
+
+	/**
+	 * Retourne les infos de la langue demandée
+	 *
+	 * @return  Entities\Langue
+	 */
+	public function getLocalizedLangues()
+	{
+		return [
+			'fr' 		=> 	Cache::rememberForEver('frenchLang', function() {
+								return Langue::where('code', 'fr')->first();
+							}),
+			'localized' => 	Langue::where('code', request('lang'))->first()
+		];
 	}
 }

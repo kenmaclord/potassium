@@ -88,7 +88,7 @@ export default {
          * @return Void
          */
         loadTraductions(){
-            axios.get('/front/traductions', {params:{lang:this.store.state.lang}}).then(({data:traductions}) => {
+            axios.get('/api/traductions', {params:{lang:this.store.state.lang}}).then(({data:traductions}) => {
                 this.store.state.traductions = traductions
                 Event.fire('translationsLoaded')
             })

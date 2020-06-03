@@ -2,22 +2,13 @@
 
 namespace Potassium\App\Listeners;
 
-use Potassium\App\Events\ZoneIsPublished;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Queue\InteractsWithQueue;
+use Potassium\App\Events\ZoneIsPublished;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SetZoneHasPublished
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      *
@@ -26,10 +17,9 @@ class SetZoneHasPublished
      */
     public function handle(ZoneIsPublished $event)
     {
-        $event->zone->contentsByLang($event->lang)->get()->each(function($content){
-            $content->update([
-                'published' => 1
-            ]);
-        });
+        updateJson($event->zone, 'published', [$event->lang => true]);
+
+        Cache::forget("traductions-{$event->lang}");
+        Cache::forget("zones");
     }
 }

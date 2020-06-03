@@ -17,7 +17,7 @@ class CreateZonesTable extends Migration
             $table->increments('id');
             $table->string('nom');
             $table->string('slug');
-            $table->integer('order')->default(0);
+            $table->boolean('published')->default(0);
             $table->timestamps();
         });
     }

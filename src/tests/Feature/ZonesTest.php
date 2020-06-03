@@ -3,14 +3,13 @@
 // @codingStandardsIgnoreStart
 namespace Potassium\Tests\Feature;
 
+use Illuminate\Support\Str;
 use Potassium\Tests\TestCase;
-
 use Potassium\App\Entities\Zone;
-use Potassium\App\Entities\Traduction;
-use Potassium\App\Entities\TraductionContent;
-use Potassium\App\Events\ZoneIsPublished;
-
 use Illuminate\Support\Facades\File;
+use Potassium\App\Entities\Traduction;
+use Potassium\App\Events\ZoneIsPublished;
+use Potassium\App\Entities\TraductionContent;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -31,7 +30,7 @@ class ZonesTest extends TestCase
 	{
 		$this->assertCount(0, Zone::all());
 
-		$this->post('/admin/traductions/zones', ['nom' => 'Zone 51']);
+		$this->post('/admin/zones', ['nom' => 'Zone 51']);
 
 		$this->assertCount(1, Zone::all());
 	}
@@ -44,7 +43,7 @@ class ZonesTest extends TestCase
 
 		$this->expectException(ValidationException::class);
 
-		$this->post('/admin/traductions/zones', ['nom' => '']);
+		$this->post('/admin/zones', ['nom' => '']);
 
 		$this->assertCount(0, Zone::all());
 	}
@@ -57,7 +56,7 @@ class ZonesTest extends TestCase
 
 		$newName = "Zone 51";
 
-		$this->put("/admin/traductions/zones/{$zone->id}", ['nom' => $newName]);
+		$this->put("/admin/zones/{$zone->id}", ['nom' => $newName]);
 
 		$this->assertDatabaseHas('zones', ['nom' => $newName]);
 
@@ -72,7 +71,7 @@ class ZonesTest extends TestCase
 
 		$this->expectException(ValidationException::class);
 
-		$this->put("/admin/traductions/zones/{$zone->id}", ['nom' => ""]);
+		$this->put("/admin/zones/{$zone->id}", ['nom' => ""]);
 	}
 
 	/** @test */
@@ -85,7 +84,7 @@ class ZonesTest extends TestCase
 				$zone->save();
 			});
 
-		$this->put('/admin/traductions/zones/reorder/zones', ['newOrder' => [2, 1, 3, 4, 5]]);
+		$this->put('/admin/zones/reorder/zones', ['newOrder' => [2, 1, 3, 4, 5]]);
 
 		$this->assertEquals(0, $zones->fresh()[1]->order);
 		$this->assertEquals(1, $zones->fresh()[0]->order);
@@ -106,7 +105,7 @@ class ZonesTest extends TestCase
 		$this->assertCount(5, Traduction::all());
 		$this->assertCount(5, TraductionContent::all());
 
-		$this->delete("/admin/traductions/zones/{$zone->id}");
+		$this->delete("/admin/zones/{$zone->id}");
 
 		$this->assertCount(4, Zone::all());
 		$this->assertCount(4, Traduction::all());
@@ -129,7 +128,7 @@ class ZonesTest extends TestCase
 			});
 		$zone = TraductionContent::first()->zone();
 
-		$response = $this->get("/admin/traductions/zones/is_published/{$zone->id}/ja")->decodeResponseJson();
+		$response = $this->get("/admin/zones/is_published/{$zone->id}/ja")->decodeResponseJson();
 
 		$this->assertTrue($response['fr']);
 		$this->assertFalse($response['localized']);
@@ -145,11 +144,11 @@ class ZonesTest extends TestCase
 
 		$zone = Zone::find(1);
 
-		$this->put("/admin/traductions/zones/publish/{$zone->id}/{$lang}");
+		$this->put("/admin/zones/publish/{$zone->id}/{$lang}");
 
 		$this->assertTrue($zone->isPublished($lang));
 
-		$localizationFilePath = resource_path()."/lang/{$lang}/".str_slug($zone->slug).".php";
+		$localizationFilePath = resource_path()."/lang/{$lang}/".Str::slug($zone->slug).".php";
 
 		$this->assertFileExists($localizationFilePath);
 

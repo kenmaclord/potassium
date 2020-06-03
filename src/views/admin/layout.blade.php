@@ -14,24 +14,28 @@
             <link rel="stylesheet" href="{{ mix('/css/admin.css')}}">
     </head>
     <body class="min-h-screen">
-        <div id="admin" class="flex flex-1">
-            <!-- Notifications -->
-            <notification
-                type="{{Session::get('status')}}"
-                message="{{Session::get('message')}}">
-            </notification>
+        <div id="admin" v-cloak>
+            <transition appear name="fade" mode="out-in">
+                <div class="flex flex-1">
+                    <!-- Notifications -->
+                    <notification
+                        type="{{Session::get('status')}}"
+                        message="{{Session::get('message')}}">
+                    </notification>
 
-            @include ('admin.app.sidebar')
+                    @include ('admin.app.sidebar')
 
-            <div class="content">
-                @include ('potassium::admin.app.header')
+                    <div class="content">
+                        @include ('potassium::admin.app.header')
 
-                <component is="{{$page}}" data="{{$data ?? null}}" inline-template>
-                    <div class="page">
-                        @yield('content')
+                        <component is="{{$page}}" data="{{$data ?? null}}" inline-template>
+                            <div class="page">
+                                @yield('content')
+                            </div>
+                        </component>
                     </div>
-                </component>
-            </div>
+                </div>
+            </transition>
         </div>
 
         <!-- Scripts -->

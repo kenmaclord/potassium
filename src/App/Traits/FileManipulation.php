@@ -2,6 +2,7 @@
 
 namespace Potassium\App\Traits;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Potassium\App\Exceptions\FileManipulationException;
 use Symfony\Component\HttpFoundation\Response as ResponseCode;
@@ -63,14 +64,14 @@ trait FileManipulation
 
 		/** Slugifie le nom de fichier si l'option est demandée **/
 		if($options->slugify){
-			$newName = str_slug($newName);
+			$newName = Str::slug($newName);
 		}
 
 		// Ajoute l'extension
 		if(is_string($file)){
-			$newName .= ".".strtolower(pathinfo($file,PATHINFO_EXTENSION));
+			$newName .= ".".mb_strtolower(pathinfo($file,PATHINFO_EXTENSION));
 		}else{
-			$newName .= ".".strtolower($file->getClientOriginalExtension());
+			$newName .= ".".mb_strtolower($file->getClientOriginalExtension());
 		}
 
 		return $newName;

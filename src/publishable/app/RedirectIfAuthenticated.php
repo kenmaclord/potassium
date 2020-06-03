@@ -20,7 +20,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             if (is_null($guard)) {
-                return redirect()->route('admin');
+                return redirect()->route('admin.dashboard');
             }
 
             if ($guard=='customer') {

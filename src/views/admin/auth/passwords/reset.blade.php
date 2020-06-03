@@ -40,7 +40,7 @@
         @endif
     </p>
 
-    <button type="submit" class="button submit is-outlined">
+    <button type="submit" class="button submit is-primary is-outlined">
         <span>Réinitialiser le mot de passe</span>
     </button>
 @endsection

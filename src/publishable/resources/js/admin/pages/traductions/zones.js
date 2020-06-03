@@ -20,7 +20,7 @@ export default Vue.component('zones', {
 
             sortableOptions: {
                 draggable: ".zone",
-                route: "/admin/traductions/zones/reorder/zones",
+                route: "/admin/zones/reorder/zones",
                 list: 'zones'
             }
 		}
@@ -41,7 +41,7 @@ export default Vue.component('zones', {
 		fetchData()
 		{
 			if(this.store.state.currentTab==this.tab){
-				axios.get(`/admin/traductions/zones`).then(({data}) => {
+				axios.get(`/admin/zones`).then(({data}) => {
 					this.zones = data
 					Event.fire('refreshSelectItemsList', this.zones)
 				})
@@ -57,7 +57,7 @@ export default Vue.component('zones', {
 		 */
 		deleteZone(zone){
 			if(zone.context=="zones"){
-				axios.delete(`/admin/traductions/zones/${zone.element.id}`).then(({data}) => {
+				axios.delete(`/admin/zones/${zone.element.id}`).then(({data}) => {
 					this.fetchData()
 					notify(data)
 				})

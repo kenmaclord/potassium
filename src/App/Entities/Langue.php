@@ -3,7 +3,6 @@
 namespace Potassium\App\Entities;
 
 use Potassium\App\Entities\Entity;
-use Potassium\App\Entities\Langue;
 use Illuminate\Support\Facades\Schema;
 
 class Langue extends Entity
@@ -46,7 +45,7 @@ class Langue extends Entity
 	 */
 	public function scopeVisible($query)
 	{
-		return $query->where('visible', 1);
+		return $query->where('visible', 1)->orderBy('order');
 	}
 
 
@@ -59,7 +58,7 @@ class Langue extends Entity
 	 */
 	public function scopeAvailable($query)
 	{
-		return $query->where('available', 1);
+		return $query->where('available', 1)->orderBy('order');
 	}
 
 

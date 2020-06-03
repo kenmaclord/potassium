@@ -1,9 +1,8 @@
 <?php
 
-use Entities\Pays;
-use Entities\Langue;
-use App\Entities\Continent;
-use Illuminate\Http\Request;
+use Potassium\App\Entities\Pays;
+use Potassium\App\Entities\Langue;
+use Potassium\App\Entities\Continent;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,16 +15,19 @@ use Illuminate\Http\Request;
 |
 */
 // Route::group(['middleware' =>'auth:api'], function(){
-Route::group([], function(){
-    Route::get('/langues/{type}', function ($type) {
-        return Langue::$type()->orderBy('order')->get();
-    });
+Route::prefix('api')
+    ->group(function(){
+        Route::get('/langues/{type}', function ($type) {
+            return Langue::$type()->orderBy('order')->get();
+        });
 
-    Route::get('/pays', function () {
-        if (json_decode(request('group_by_continent'))) {
-            return Continent::with('pays')->orderBy('name')->get();
-        }
+        Route::get('/pays', function () {
+            if (json_decode(request('group_by_continent'))) {
+                return Continent::with('pays')->orderBy('name')->get();
+            }
 
-        return Pays::orderBy('name')->get();
+            return Pays::orderBy('name')->get();
+        });
+
+        Route::get('/front/traductions', 'App\Http\Controllers\Front\FrontTraductionsController@index');
     });
-});

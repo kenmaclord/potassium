@@ -4,20 +4,23 @@ namespace Potassium\App\Http\Controllers\Admin;
 
 use Potassium\App\Entities\Zone;
 use Potassium\App\Entities\Langue;
-use Potassium\App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
+use Potassium\App\Entities\Traduction;
+use Potassium\App\Http\Controllers\Controller;
 
 class ZonesController extends Controller
 {
+	/**
+	 * Retourne la liste des zones avec les traductions
+	 *
+	 * @return  Illuminate\Database\Eloquent\Collection
+	 */
 	public function index()
 	{
-		if(request()->wantsJson())
-		{
-			return Cache::rememberForEver('zones', function() {
-				return Zone::orderBy('order')->get();
-			});
-		}
+		return Cache::rememberForEver("zones", function(){
+			return Zone::with('traductions.zone')->get();
+		});
 	}
 
 
@@ -28,35 +31,28 @@ class ZonesController extends Controller
 	 */
 	public function store()
 	{
-		request()->validate([
-			'nom' => 'required'
-		]);
-
-		$this->incrementOrder('zones');
-
-		Zone::create([
-			'nom' 	=> request('nom'),
-			'slug' 	=> str_slug(request('nom'))
-		]);
-
-		Cache::forget('zones');
+		Zone::create(request()->validate([
+				'nom' => 'required'
+			])
+		);
 
 		return $this->respond('Zone ajoutée');
 	}
 
 
 	/**
-	 * Met une Zone à jour
+	 * Met à jour le nom d'une zone
 	 *
-	 * @param   Entities\Zone    $zone
+	 * @param   Potassium\App\Entities\Zone    $zone
 	 *
 	 * @return  Json
 	 */
 	public function update(Zone $zone)
 	{
-		$zone->update(request()->validate(['nom' => 'required']));
-
-		Cache::forget('zones');
+		$zone->update(request()->validate([
+				'nom' => 'required'
+			])
+		);
 
 		return $this->respond('Nom modifié');
 	}
@@ -74,7 +70,7 @@ class ZonesController extends Controller
 	{
 		$zone->publish($langue->code);
 
-		return $this->respond('Zone de traduction en '.strtolower($langue->nom).' publiée');
+		return $this->respond('Zone de traduction en '. mb_strtolower($langue->nom) .' publiée');
 	}
 
 
@@ -89,25 +85,6 @@ class ZonesController extends Controller
 	{
 		$zone->delete();
 
-		Cache::forget('zones');
-
 		return $this->respond('Zone supprimée');
-	}
-
-
-	/**
-	 * Détermine si une zone dans une langue donnée est publiée
-	 *
-	 * @param   Entities\Zone     $zone
-	 * @param   Entities\Langue   $langue
-	 *
-	 * @return  Integer
-	 */
-	public function isPublished(Zone $zone, Langue $langue)
-	{
-		return [
-			'fr' 		=> $zone->isPublished('fr'),
-			'localized' => $zone->isPublished($langue->code),
-		];
 	}
 }

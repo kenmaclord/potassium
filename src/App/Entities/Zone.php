@@ -2,16 +2,15 @@
 
 namespace Potassium\App\Entities;
 
+use Illuminate\Support\Str;
 use Potassium\App\Entities\Entity;
-use Potassium\App\Entities\Traduction;
 use Potassium\App\Traits\Publishable;
+use Potassium\App\Entities\Traduction;
 use Potassium\App\Entities\TraductionContent;
 
 class Zone extends Entity
 {
 	use Publishable;
-
-	protected $table="zones";
 
 	/**
 	 * The attributes that are mass assignable.
@@ -19,7 +18,7 @@ class Zone extends Entity
 	 * @var array
 	 */
 	protected $fillable = [
-		'nom', 'slug', 'order'
+		'nom', 'slug', 'published'
 	];
 
 
@@ -35,44 +34,13 @@ class Zone extends Entity
 
 
 	/**
-	 * Relation liant une zone à ses tous ses contenus
+	 * Enregistre en même temps le nom de la zone et le slug associé
 	 *
-	 * @return  Illuminate\Database\Eloquent\Builder
+	 * @param  String  $value
 	 */
-	public function contents()
+	public function setNomAttribute($value)
 	{
-		return $this->hasManyThrough(TraductionContent::class, Traduction::class);
-	}
-
-
-	/**
-	 * Relation liant une zone à ses tous ses contenus dans une langue donnée
-	 *
-	 * @return  Illuminate\Database\Eloquent\Builder
-	 */
-	public function contentsByLang($lang)
-	{
-		return $this->hasManyThrough(TraductionContent::class, Traduction::class)->lang($lang);
-	}
-
-
-	/**
-	 * Informe si une zone entière dans une langue donnée est publiée
-	 *
-	 * @param   String $lang
-	 *
-	 * @return  Boolean
-	 */
-	public function isPublished($lang)
-	{
-		$published = true;
-
-		$this->contentsByLang($lang)->get();
-
-		foreach ($this->contentsByLang($lang)->get() as $content) {
-			$published = $published && !!$content->published;
-		}
-
-		return $published;
+		$this->attributes['nom'] = $value;
+		$this->attributes['slug'] = Str::slug($value);
 	}
 }

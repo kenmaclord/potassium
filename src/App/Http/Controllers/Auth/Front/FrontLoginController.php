@@ -3,9 +3,10 @@
 namespace Potassium\App\Http\Controllers\Auth\Front;
 
 use App\Entities\User;
-use Potassium\App\Http\Controllers\Controller;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Potassium\App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class FrontLoginController extends Controller
@@ -28,7 +29,7 @@ class FrontLoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
