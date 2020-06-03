@@ -2,6 +2,15 @@
 
 use Illuminate\Support\Facades\Cache;
 
+    function updateJson($model, $column, $data){
+        foreach ($data as $key => $content) {
+            $jsonArray = json_decode($model->$column, true);
+            $jsonArray[$key] = $content;
+            $model->$column = json_encode($jsonArray);
+            $model->save();
+        }
+    }
+
     function isPublishable($entity)
     {
         $namespace = 'App\\Strategies\\Publishability\\';

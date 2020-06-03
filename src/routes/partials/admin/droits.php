@@ -1,7 +1,11 @@
 <?php
 
-Route::group(['prefix'=>'utilisateurs/droits', 'middleware' => 'can:manage,App\Entities\User'], function(){
-
-    Route::get('/droits', 'DroitsController@index');
-    Route::put('/droits/{user}', 'DroitsController@update');
-});
+/**
+* Routes pour les droits
+*/
+Route::prefix('utilisateurs/droits')
+    ->middleware(['can:manage,App\Entities\User'])
+    ->group(function(){
+        Route::get('/', 'DroitsController@index');
+        Route::put('/{user}', 'DroitsController@update');
+    });

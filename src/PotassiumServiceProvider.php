@@ -5,18 +5,20 @@ namespace Potassium;
 use Dotenv\Dotenv;
 use App\Observers\Observers;
 use Potassium\PotassiumPreset;
+use Potassium\App\Entities\Zone;
 use Illuminate\Support\Facades\Schema;
+use Potassium\App\Entities\Traduction;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\Console\PresetCommand;
-
-use Potassium\App\Providers\AuthServiceProvider;
-use Potassium\App\Providers\EventServiceProvider;
-use Potassium\App\Providers\ConfigServiceProvider;
-
+use Potassium\App\Observers\ZoneObserver;
 use Potassium\App\Commands\NewPageCommand;
+use Potassium\App\Observers\TraductionObserver;
+use Illuminate\Foundation\Console\PresetCommand;
+use Potassium\App\Providers\AuthServiceProvider;
 use Potassium\App\Commands\NamingStrategyCommand;
 use Potassium\App\Commands\UploadStrategyCommand;
+use Potassium\App\Providers\EventServiceProvider;
+use Potassium\App\Providers\ConfigServiceProvider;
 use Potassium\App\Commands\ProcessingStrategyCommand;
 use Potassium\App\Commands\PublishabilityStrategyCommand;
 
@@ -43,12 +45,15 @@ class PotassiumServiceProvider extends ServiceProvider
 
         $this->init();
         $this->loaders();
+        $this->observers();
         $this->publishCommands();
     }
 
 
     public function register(){
         $this->app->register(AuthServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
+        $this->app->register(ConfigServiceProvider::class);
     }
 
 
@@ -70,7 +75,6 @@ class PotassiumServiceProvider extends ServiceProvider
             \DB::statement(\DB::raw('PRAGMA foreign_keys=1'));
         }
 
-
         if (file_exists(base_path('app/Observers/Observers.php'))) {
             $observers = new Observers();
             $observers->register();
@@ -78,6 +82,23 @@ class PotassiumServiceProvider extends ServiceProvider
     }
 
 
+    /**
+     * Observers généraux
+     *
+     * @return  [type]  [description]
+     */
+    public function observers()
+    {
+        Zone::observe(ZoneObserver::class);
+        Traduction::observe(TraductionObserver::class);
+    }
+
+
+    /**
+     * Loaders
+     *
+     * @return  [type]  [description]
+     */
     public function loaders()
     {
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
@@ -98,6 +119,11 @@ class PotassiumServiceProvider extends ServiceProvider
     }
 
 
+    /**
+     * Toutes les publications
+     *
+     * @return  [type]  [description]
+     */
     public function publishCommands()
     {
         $this->publishes([

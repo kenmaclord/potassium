@@ -3,11 +3,10 @@
 // @codingStandardsIgnoreStart
 namespace Potassium\Tests\Feature;
 
+use Illuminate\Support\Str;
 use Potassium\Tests\TestCase;
-
 use Potassium\App\Entities\Traduction;
 use Potassium\App\Entities\TraductionContent;
-
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -105,7 +104,7 @@ class TraductionsTest extends TestCase
 
 		$this->assertDatabaseHas('traductions', [
 			'zone_id' 	=> $zone->id,
-			'key' 		=> str_slug($key)
+			'key' 		=> Str::slug($key)
 		]);
 	}
 

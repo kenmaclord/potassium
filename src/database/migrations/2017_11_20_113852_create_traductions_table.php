@@ -17,6 +17,7 @@ class CreateTraductionsTable extends Migration
             $table->increments('id');
             $table->integer('zone_id')->unsigned();
             $table->string('key');
+            $table->text('content');
             $table->timestamps();
 
             $table->foreign('zone_id')

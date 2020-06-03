@@ -145,7 +145,7 @@
 			 * @return  {[type]}  [description]
 			 */
 			toBePublished(){
-				axios.get(`/admin/traductions/zones/is_published/${this.currentZone}/${this.localizedLang.code}`).then(({data}) => {
+				axios.get(`/admin/zones/is_published/${this.currentZone}/${this.localizedLang.code}`).then(({data}) => {
 					this.isPublished['fr'] = data.fr
 					this.isPublished[this.localizedLang.code] = data.localized
 				})
@@ -161,7 +161,7 @@
 			 * @return  Json
 			 */
 			publish(zone, lang){
-				axios.put(`/admin/traductions/zones/publish/${zone}/${lang}`).then(({data}) => {
+				axios.put(`/admin/zones/publish/${zone}/${lang}`).then(({data}) => {
 					notify(data)
 					this.toBePublished()
 				}).catch(({response: {error: {data}}}) => {

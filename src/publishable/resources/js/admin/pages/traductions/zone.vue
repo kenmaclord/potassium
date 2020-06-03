@@ -8,7 +8,7 @@
 
         <edit-in-place
             :id="zone.id"
-            :url="`/admin/traductions/zones/${zone.id}`"
+            :url="`/admin/zones/${zone.id}`"
             :text="zone.nom"
             context="zones"
             emptyText="Cliquer pour saisir une légende..."

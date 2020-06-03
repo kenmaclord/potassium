@@ -2,8 +2,10 @@
 
 namespace Potassium\App\Traits;
 
-use Potassium\App\Events\ZoneIsPublished;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Potassium\App\Entities\Traduction;
+use Potassium\App\Events\ZoneIsPublished;
 
 trait Publishable
 {
@@ -14,9 +16,9 @@ trait Publishable
 	 */
 	public function publish($lang)
 	{
-		$traductions = $this->contentsByLang($lang)->get();
+		$traductions = Traduction::where('zone_id', $this->id)->get();
 
-		$formatedData = $this->formatData($traductions);
+		$formatedData = $this->formatData($traductions, $lang);
 
 		$filename = $this->writeTranslationFile($formatedData, $this->slug, $lang);
 
@@ -65,13 +67,16 @@ trait Publishable
 	 *
 	 * @return String $formatedData : Contenu du fichier à écrire par les fonctions d'écriture
 	 */
-	private function formatData($eloquentData)
+	private function formatData($eloquentData, $lang)
 	{
 		$rawData = [];
 
 		foreach ($eloquentData as $traduction) {
-			$key = $traduction->traduction->key;
-			$rawData[$key] = $traduction->body;
+			$key = $traduction->key;
+
+			if (isset(json_decode($traduction->content, true)[$lang])) {
+				$rawData[$key] = json_decode($traduction->content, true)[$lang];
+			}
 		}
 
 		$formatedData = "<?php".PHP_EOL."return ".PHP_EOL.var_export($rawData,true).";";
@@ -91,7 +96,7 @@ trait Publishable
 	private function buildFileName($zone, $lang)
 	{
 		return [
-			'filename' => sprintf("%s/lang/%s/%s.php", resource_path(), $lang, str_slug($zone)),
+			'filename' => sprintf("%s/lang/%s/%s.php", resource_path(), $lang, Str::slug($zone)),
 			'langPath' => sprintf("%s/lang/%s", resource_path(), $lang)
 		];
 	}

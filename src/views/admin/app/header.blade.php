@@ -23,7 +23,7 @@
 
 
 
-    <form action="/logout" id="logout" method="POST">
+    <form action="{{route('admin.logout')}}" id="logout" method="POST">
       {{ csrf_field()}}
       <button type="submit" class="button is-danger is-outlined">
         <span class="icon" style="margin-right: 5px">
