@@ -77,8 +77,6 @@ export default {
                 object[attribute] = this.localized(this.i18nContent, lang, attribute)
             })
 
-
-
             object['lang'] = lang
         },
 
@@ -88,7 +86,7 @@ export default {
          * @return Void
          */
         loadTraductions(){
-            axios.get('/api/traductions', {params:{lang:this.store.state.lang}}).then(({data:traductions}) => {
+            axios.get('/api/front/traductions', {params:{lang:this.store.state.lang}}).then(({data:traductions}) => {
                 this.store.state.traductions = traductions
                 Event.fire('translationsLoaded')
             })

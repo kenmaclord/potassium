@@ -18,7 +18,6 @@
 								:type="field.type"
 								:id="field.name"
 								autofocus
-								tabindex="-1"
 								:placeholder="field.titre"
 								v-model="data[field.name]"
 								@keyup.enter="addEntity"
@@ -104,7 +103,7 @@
 					return "110px"
 				}
 
-				return 166+(80*(this.fields.length-1))+"px"
+				return 180+(80*(this.fields.length-1))+"px"
 			},
 
 			payload(){

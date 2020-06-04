@@ -12,52 +12,64 @@ Vue.component('traductions_content',{
 	data() {
 		return {
 			byZone: [],
-			filteredZones: [],
 			store,
 			availableLangues: {},
-			currentLang: 'en'
+			currentLocalizedLang: 'en'
 		}
 	},
 
 	created(){
-		Event.listen('entityAdded', this.fecthListe)
-		this.getAvailableLangues()
-
+		Event.listen('entityAdded', this.fetchListe)
 		Event.listen('availableLanguagesChanged', this.getAvailableLangues)
+		Event.listen('refreshSelectItemsList', this.fetchListeWithNoCondition)
+
+        this.store.setLang(this.currentLocalizedLang)
+		this.getAvailableLangues()
 	},
 
 	watch: {
-		currentLang(value){
+		currentLocalizedLang(value){
 			this.store.setLang(value)
-			this.fecthListe()
+			this.fetchListe()
 		}
 	},
 
 
 	mounted(){
-		this.fecthListe()
+		this.fetchListe()
 	},
 
 	methods: {
 		/**
-		 * Récupère les infos de chaque onglet
+		 * Récupère les infos de zones et de traductions
+		 * si l'onglet Content est ouvert
 		 *
-		 * @param   String  tab
 		 * @return  void
 		 */
-		fecthListe(){
-			if(this.store.state.currentTab==this.tab){
-				axios.get(`/admin/traductions`, {'params': {'lang':this.currentLang}})
-				.then(({data}) => {
-					this.byZone = data
-					this.filteredZones = Object.keys(data)
-
-					Vue.nextTick(function () {
-						Event.fire('filterZone')
-					})
-				})
+		fetchListe(){
+			if(this.store.state.currentTab == this.tab){
+				this.fetchListeWithNoCondition()
 			}
 		},
+
+
+		/**
+		 * Récupère les infos de zones et de traductions
+		 *
+		 * @return  void
+		 */
+		fetchListeWithNoCondition(){
+			axios.get(`/admin/zones`)
+			.then(({data}) => {
+				this.byZone = data
+
+				Vue.nextTick(() =>  {
+					this.store.setAllZones(data)
+				})
+			})
+		},
+
+
 
 		/**
 		 * Récupère les langues disponibles dans l'admin
@@ -65,7 +77,7 @@ Vue.component('traductions_content',{
 		 * @return  {[type]}  [description]
 		 */
 		getAvailableLangues(){
-			axios.get(`/admin/traductions/langues/available`)
+			axios.get(`/admin/langues/available`)
 			.then(({data}) => {
 				this.availableLangues = data
 			})
@@ -73,26 +85,14 @@ Vue.component('traductions_content',{
 
 
 		/**
-		 * Attribue les zones filtrées
+		 * Vérifie si la zone passée en paramètre est dans la liste des zones filtrées
 		 *
-		 * @param   Array  filteredZones
+		 * @param   {[type]}  key
 		 *
-		 * @return  void
-		 */
-		filterZone(filteredZones){
-			this.filteredZones = filteredZones
-		},
-
-
-		/**
-		 * Détermine si un nom de zone fait partie des zones filtrées
-		 *
-		 * @param   String  key
-		 *
-		 * @return  Boolean
+		 * @return  {[type]}       [description]
 		 */
 		contains(key){
-			return _.includes(this.filteredZones, key)
+			return _.includes(this.store.state.filteredZones, key)
 		}
 	}
 })

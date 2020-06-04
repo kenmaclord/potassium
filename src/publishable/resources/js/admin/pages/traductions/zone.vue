@@ -1,11 +1,5 @@
 <template>
     <div class="zone">
-        <div class="draggable-handle">
-            <span class="icon is-small">
-                <i class="fa fa-bars"></i>
-            </span>
-        </div>
-
         <edit-in-place
             :id="zone.id"
             :url="`/admin/zones/${zone.id}`"

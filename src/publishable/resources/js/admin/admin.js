@@ -1,8 +1,8 @@
 window.Vue = require('vue');
 
-import i18n         from "../utilities/i18n"
+// import i18n         from "../utilities/i18n"
 
-Vue.mixin(i18n)
+// Vue.mixin(i18n)
 
 require('../utilities/bootstrap');
 

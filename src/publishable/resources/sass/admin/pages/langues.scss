@@ -5,7 +5,7 @@
     }
   }
 
-  .field{
+  .col{
     width: 20%;
 
     &.head{
@@ -29,7 +29,7 @@
 // Petits périphériques
 @media screen and (max-width: 550px){
   #langues{
-    .field.traduction{
+    .col.traduction{
       display: none;
     }
 

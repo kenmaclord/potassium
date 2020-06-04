@@ -32,11 +32,11 @@ Vue.component('user', {
 
 
     methods: {
-		/**
-		 * Alterne le statut d'un utilisateur
-		 *
-		 * @return  void
-		 */
+        /**
+         * Alterne le statut d'un utilisateur
+         *
+         * @return  void
+         */
         toggleLock() {
             axios.put(`/admin/utilisateurs/toggleLock/${this.user.id}`, { locked: !this.user.locked }).then(({ data }) => {
                 notify(data)

@@ -1,16 +1,16 @@
 <template>
   <div class="langue">
-    <div class="field nom">{{langue.nom}}</div>
-    <div class="field traduction">{{langue.traduction}}</div>
-    <div class="field code">{{langue.code}}</div>
+    <div class="col nom">{{langue.nom}}</div>
+    <div class="col traduction">{{langue.traduction}}</div>
+    <div class="col code">{{langue.code}}</div>
 
-    <div class="field visible">
+    <div class="col visible">
       <span class="icon" @click="toggleVisibility">
         <i class="fa fa-eye" :class="{'fa-eye': visible, 'fa-eye-slash': !visible}"></i>
       </span>
     </div>
 
-    <div class="field available">
+    <div class="col available">
       <span class="icon" @click="toggleAvailability">
         <i class="fa fa-eye" :class="{'fa-eye': available, 'fa-eye-slash': !available}"></i>
       </span>
@@ -26,7 +26,7 @@
       return {
         visible: !!Number(this.langue.visible),
         available: !!Number(this.langue.available),
-        routePrefix: "/admin/traductions/langues"
+        routePrefix: "/admin/langues"
       }
     },
 
@@ -64,7 +64,7 @@
   }
 
   @media screen and (max-width: 550px){
-    .field.traduction{
+    .col.traduction{
       display: none;
     }
   }
