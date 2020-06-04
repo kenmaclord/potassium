@@ -1,5 +1,4 @@
 import Vue    			from 'vue'
-import sortableMixin    from '../../../utilities/sortable'
 
 import zone   			from './zone.vue'
 import modal     		from '../../app/modal.vue'
@@ -11,18 +10,10 @@ export default Vue.component('zones', {
 
 	components: {zone, modal, addSection},
 
-    mixins: [sortableMixin],
-
 	data(){
 		return{
 			zones: [],
-			store,
-
-            sortableOptions: {
-                draggable: ".zone",
-                route: "/admin/zones/reorder/zones",
-                list: 'zones'
-            }
+			store
 		}
 	},
 
@@ -40,10 +31,12 @@ export default Vue.component('zones', {
 		 */
 		fetchData()
 		{
-			if(this.store.state.currentTab==this.tab){
+			if(this.store.state.currentTab == this.tab){
 				axios.get(`/admin/zones`).then(({data}) => {
 					this.zones = data
-					Event.fire('refreshSelectItemsList', this.zones)
+					this.store.setAllZones(this.zones)
+
+					Event.fire('refreshSelectItemsList')
 				})
 			}
 		},

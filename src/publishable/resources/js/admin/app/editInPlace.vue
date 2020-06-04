@@ -1,8 +1,8 @@
 <template>
 	<div class="edit-in-place">
-		<div class="focus editField control" v-show="editing">
+		<div class="focus flex editField control" v-show="editing">
 			<input
-				class="input edition"
+				class="input edition flex-1"
 				:class="inputClass"
 				autofocus
 				type="text"
@@ -14,7 +14,7 @@
 				v-if="!textarea"
 			>
 			<textarea
-				class="input edition"
+				class="input edition flex-1"
 				:class="inputClass"
 				autofocus
 				type="text"
@@ -74,7 +74,7 @@
 
 		computed: {
 			canBeSaved(){
-				if(this.required && this.editedText==""){
+				if (this.required && $.empty(this.editedText)) {
 					return false
 				}
 				return true
@@ -203,11 +203,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding-right: 20px;
-	}
-
-	.input, .componentText{
-		font-family: 'Lato-Regular', Arial;
+		padding-right: 10px;
 	}
 
 	.componentText{
@@ -217,9 +213,7 @@
 
 	.buttons{
 		display:  flex;
-		min-width: 100px;
-		flex-direction: row;
-		flex: 1;
+		width: 120px;
 		justify-content: flex-end;
 
 		.buttonLabel{ display: none;}

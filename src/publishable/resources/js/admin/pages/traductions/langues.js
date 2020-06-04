@@ -41,7 +41,7 @@ export default Vue.component('langues', {
 		fetchData()
 		{
 			if(this.store.state.currentTab==this.tab){
-				axios.get(`/admin/traductions/langues`).then(({data}) => {
+				axios.get(`/admin/langues`).then(({data}) => {
 					this.langues = data
 				})
 			}

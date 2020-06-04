@@ -283,20 +283,20 @@ smoothScroll(containerSelector, targetSelector, duration=200, easing="easeInOutQ
     * @return Boolean
     */
     empty(value){
-        if (value == undefined){
+        if (value === undefined){
             return true
         }
 
-        if(value==null){
+        if(value===null){
           return true
         }
 
-        if (typeof value =="object"){
+        if (typeof value == "object"){
           return value.length==0
         }
 
-        if (typeof value =="string"){
-          return (value=="" || value==null)
+        if (typeof value == "string"){
+          return (value.trim()=="" || value==null)
         }
 
         return false

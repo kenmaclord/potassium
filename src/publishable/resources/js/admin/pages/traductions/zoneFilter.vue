@@ -15,54 +15,34 @@
 </template>
 
 <script>
+	import store  from './TraductionsStore'
+
 	export default {
-		/*
-		|--------------------------------------------------------------------------
-		| Gestion des data du composant (props, data, computed et watch)
-		|--------------------------------------------------------------------------
-		*/
-		props : ['data'],
-
-		mounted(){
-			Event.listen('filterZone', this.autocomplete)
-		},
-
 		data(){
 			return {
+				store,
 				query: "",
-				isOpen: false,
-				debounceFilter: _.debounce(() => {this.autocomplete()}, 100)
+				debounceFilter: _.debounce(() => {this.updateZoneListe()}, 100)
 			}
 		},
 
-		/*
-		|--------------------------------------------------------------------------
-		| Méthodes du composant
-		|--------------------------------------------------------------------------
-		*/
+		created(){
+			Event.listen('refreshSelectItemsList', this.updateZoneListe)
+		},
+
 		methods:{
 			/**
 			 * Gère le filtrage des zones
 			 *
 			 * @return Void
 			 */
-			autocomplete(){
+			updateZoneListe(){
 				if(this.query==""){
-					this.$emit('filter', Object.keys(this.data))
+					this.store.state.filteredZones = this.store.state.allZones
 				}else{
-					let suggestions = [];
-					_.each(this.data, (item, key) =>{
-						if (~(key).toLowerCase().indexOf(this.query.toLowerCase())){
-							suggestions.push(key)
-						}
+					this.store.state.filteredZones = _.filter(this.store.state.allZones, zone => {
+						return ~(zone).toLowerCase().indexOf(this.query.toLowerCase())
 					})
-
-					/** Assignation des résultats */
-					if(suggestions.length > 0){
-						this.$emit('filter', suggestions)
-					}else{
-						this.$emit('filter', [])
-					}
 				}
 			},
 		}
@@ -74,6 +54,7 @@
 	.zone-filter{
 		display: flex;
 		justify-content: flex-end;
+		align-items: center;
 		min-width: 250px;
 		flex: 1;
 
@@ -84,10 +65,9 @@
 		input{
 			width: 100%;
 			border: none;
-			border-bottom: 1px solid #777;
+			border-bottom: 1px solid var(--color-primary);
 			height: 35px;
 			outline: none;
-			font-family: Lato-regular;
 			font-size: 1rem;
 		}
 	}

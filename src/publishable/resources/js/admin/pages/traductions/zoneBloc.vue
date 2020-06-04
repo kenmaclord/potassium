@@ -2,7 +2,7 @@
 	<div class="zone">
 		<div class="content">
 			<h2 class="zoneHeader">
-				<div class="zoneName" v-text="keyName"></div>
+				<div class="zoneName" v-text="zone.nom"></div>
 			</h2>
 
 			<div class="headers">
@@ -13,7 +13,7 @@
 					<button
 						class='button'
 						:class="{'is-danger': !isPublished.fr, 'is-success': isPublished.fr}"
-						@click.prevent="publish(currentZone, 'fr')"
+						@click.prevent="publish('fr')"
 						v-text="publishingStateText(frenchLang)">
 					</button>
 				</div>
@@ -23,15 +23,14 @@
 					<button
 						class='button'
 						:class="{'is-danger': !isPublished[localizedLang.code], 'is-success': isPublished[localizedLang.code]}"
-						@click.prevent="publish(currentZone, localizedLang.code)"
-						v-text="publishingStateText(localizedLang)">
+						v-text="publishingStateText(localizedLang)"
+						@click.prevent="publish(localizedLang.code)">
 					</button>
 				</div>
 			</div>
 
-
 			<traduction
-				v-for="item in traductions"
+				v-for="item in zone.traductions"
 				:key="item.id"
 				:item="item">
 			</traduction>
@@ -57,7 +56,7 @@
 		| Gestion des data du composant (props, data, computed et watch)
 		|--------------------------------------------------------------------------
 		*/
-		props : ['keyName', 'traductions'],
+		props : ['zone'],
 
 		data(){
 			return {
@@ -75,7 +74,6 @@
 					'pl' : false
 				},
 				store,
-				currentZone: this.traductions[0].zone.id
 			}
 		},
 
@@ -101,12 +99,12 @@
 		|--------------------------------------------------------------------------
 		*/
 		created(){
-			Event.listen('editInPlaceSaved', this.toBePublished)
-			Event.listen('langueChanged', this.toBePublished)
+			Event.listen('editInPlaceSaved', this.updatePublishState)
+			Event.listen('langueChanged', this.setPublishState)
 		},
 
 		mounted(){
-			this.toBePublished()
+			this.setPublishState()
 		},
 
 
@@ -116,6 +114,24 @@
 		|--------------------------------------------------------------------------
 		*/
 		methods:{
+			/**
+			 * Publie une zone en entier
+			 *
+			 * @param   String zone
+			 * @param   String lang
+			 *
+			 * @return  Json
+			 */
+			publish(lang){
+				axios.put(`/admin/zones/publish/${this.zone.id}/${lang}`).then(({data}) => {
+					notify(data)
+					this.isPublished[lang] = true
+				}).catch(({response: {error: {data}}}) => {
+					notify(data)
+				})
+			},
+
+
 			/**
 			 * Retourne le texte du bouton pour publier la langue
 			 *
@@ -140,34 +156,35 @@
 
 
 			/**
-			 * Détermine si une zone est publiée ou non
+			 * Attribue l'état de publication d'une zone
 			 *
-			 * @return  {[type]}  [description]
+			 * @return  void
 			 */
-			toBePublished(){
-				axios.get(`/admin/zones/is_published/${this.currentZone}/${this.localizedLang.code}`).then(({data}) => {
-					this.isPublished['fr'] = data.fr
-					this.isPublished[this.localizedLang.code] = data.localized
-				})
+			setPublishState(data){
+				if (!$.empty(this.zone.published)) {
+					let publishedStates = JSON.parse(this.zone.published)
+
+					this.isPublished['fr'] = publishedStates['fr']
+					this.isPublished[this.localizedLang.code] = publishedStates[this.localizedLang.code]
+				}else{
+					this.isPublished['fr'] = false
+					this.isPublished[this.localizedLang.code] = false
+				}
 			},
 
 
 			/**
-			 * Publie une zone en entier
+			 * Met à jour l'état de publication d'une zone
 			 *
-			 * @param   String zone
-			 * @param   String lang
+			 * @param   Json  data
 			 *
-			 * @return  Json
+			 * @return  void
 			 */
-			publish(zone, lang){
-				axios.put(`/admin/zones/publish/${zone}/${lang}`).then(({data}) => {
-					notify(data)
-					this.toBePublished()
-				}).catch(({response: {error: {data}}}) => {
-					notify(data)
-				})
-			},
+			updatePublishState(data){
+				if (data.context == this.zone.slug) {
+					this.isPublished[data.field] = false
+				}
+			}
 		}
 	}
 </script>
@@ -191,7 +208,7 @@
 			align-items: stretch;
 
 			.head{
-				background-color: #ccc;
+				background-color: var(--color-gray-200);
 				text-align: center;
 				font-weight: bold;
 				display: flex;
@@ -201,15 +218,15 @@
 
 				&.key{
 					width: 22%;
-					margin-right: 1%;
+					min-width: 250px;
 				}
 
-				&.fr{
-					margin-right: 1%;
+				&.key, &.fr{
+					margin-right: 10px;
 				}
 
 				&.fr, &.localized{
-					width: 38%;
+					flex: 1;
 				}
 			}
 		}

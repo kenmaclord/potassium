@@ -7,9 +7,9 @@ class TraductionsStore{
 			currentTab: "content",
 			currentLocalizedLang: {},
 			frenchLang: {},
+			filteredZones: [],
+			allZones : []
 		}
-
-		this.setLang('en');
 	}
 
 	/**
@@ -30,6 +30,17 @@ class TraductionsStore{
 		this.localizedLangInfos(lang)
 	}
 
+
+	/**
+	 * Assigne la liste complète des zones
+	 *
+	 * @param  Object  data
+	 */
+	setAllZones(data){
+		this.state.allZones = _.map(data, 'slug')
+		this.state.filteredZones = this.state.allZones
+	}
+
 	/**
 	 * Récupère les informations sur la langue demandée
 	 *
@@ -38,9 +49,10 @@ class TraductionsStore{
 	 * @return  void
 	 */
 	localizedLangInfos(lang){
-		axios.get('/admin/traductions/langue', {params: {'lang': lang}}).then(({data}) => {
+		axios.get('/admin/langues/localized_langues', {params: {'lang': lang}}).then(({data}) => {
 			this.state.currentLocalizedLang = data.localized
 			this.state.frenchLang = data.fr
+
 			Event.fire('langueChanged')
 		})
 	}

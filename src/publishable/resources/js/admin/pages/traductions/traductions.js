@@ -6,11 +6,11 @@ import langues            from './langues'
 import zones              from './zones'
 
 Vue.component('traductions',{
-	props: ['data'],
+    props: ['data'],
 
-	data() {
-		return {
-			traductionsStore
-		}
-	}
+    data() {
+        return {
+            traductionsStore
+        }
+    }
 })
