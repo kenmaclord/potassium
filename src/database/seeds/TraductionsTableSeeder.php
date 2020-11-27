@@ -18,12 +18,20 @@ class TraductionsTableSeeder extends Seeder
             [
                 'id' => 1,
                 'zone_id' => 1,
-                'key' => 'not-found'
+                'key' => 'not-found',
+                'content' => json_encode([
+                    'fr' => "Désolé, cette page est introuvable",
+                    'en' => "Sorry, the page you are looking for could not be found."
+                ])
             ],
             [
                 'id' => 2,
                 'zone_id' => 1,
-                'key' => 'back-home'
+                'key' => 'back-home',
+                'content' => json_encode([
+                    'fr' => "Retour à l'accueil",
+                    'en' => "Back to home page"
+                ])
             ]
         ]);
     }

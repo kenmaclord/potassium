@@ -1,7 +1,7 @@
 <?php
 
 // @codingStandardsIgnoreStart
-namespace Potassium\Tests\Feature;
+namespace Potassium\Tests\Unit;
 
 use Potassium\Tests\TestCase;
 

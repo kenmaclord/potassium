@@ -13,7 +13,8 @@ use Illuminate\Support\ServiceProvider;
 use Potassium\App\Observers\ZoneObserver;
 use Potassium\App\Commands\NewPageCommand;
 use Potassium\App\Observers\TraductionObserver;
-use Illuminate\Foundation\Console\PresetCommand;
+// use Illuminate\Foundation\Console\PresetCommand;
+use Laravel\Ui\UiCommand;
 use Potassium\App\Providers\AuthServiceProvider;
 use Potassium\App\Commands\NamingStrategyCommand;
 use Potassium\App\Commands\UploadStrategyCommand;
@@ -31,12 +32,12 @@ class PotassiumServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        PresetCommand::macro('potassium-configure', function($command){
+        UiCommand::macro('potassium-configure', function(UiCommand $command){
             PotassiumPreset::configure($command);
             $command->info('Application configurée');
         });
 
-        PresetCommand::macro('potassium-install', function($command){
+        UiCommand::macro('potassium-install', function(UiCommand $command){
             // Node modules + Compilation des assets
             PotassiumPreset::launch($command);
 
@@ -53,7 +54,6 @@ class PotassiumServiceProvider extends ServiceProvider
     public function register(){
         $this->app->register(AuthServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
-        $this->app->register(ConfigServiceProvider::class);
     }
 
 
@@ -213,6 +213,8 @@ class PotassiumServiceProvider extends ServiceProvider
         // Routes
         $this->publishes([
             __DIR__.'/publishable/routes/web.php' => base_path('routes/web.php'),
+            __DIR__.'/publishable/routes/admin.php' => base_path('routes/admin.php'),
+            __DIR__.'/publishable/routes/front.php' => base_path('routes/front.php'),
             __DIR__.'/publishable/routes/partials/admin/users.php' => base_path('routes/partials/admin/users.php')
         ], 'routes');
 

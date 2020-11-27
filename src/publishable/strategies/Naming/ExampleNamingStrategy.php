@@ -1,12 +1,12 @@
 <?php
 
-namespace Potassium\App\Strategies\Naming;
+namespace App\Strategies\Naming;
 
 use Illuminate\Support\Facades\Storage;
 use Potassium\App\Strategies\Naming\NamingStrategy;
 use Potassium\App\Strategies\Naming\NamingStrategyInterface;
 
-class NewsPhotoNamingStrategy extends NamingStrategy implements NamingStrategyInterface
+class ExampleNamingStrategy extends NamingStrategy implements NamingStrategyInterface
 {
 	public $file;
 	public $modele;

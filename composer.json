@@ -3,6 +3,7 @@
     "description": "Simple admin for my projects",
     "type": "project",
     "require": {
+        "laravel/ui":"^2.4",
         "intervention/image": "^2.5",
         "mcamara/laravel-localization": "^1.5",
         "caouecs/laravel-lang": "^6.0"

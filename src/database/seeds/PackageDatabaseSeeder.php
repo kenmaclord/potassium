@@ -32,7 +32,7 @@ class PackageDatabaseSeeder extends Seeder
 
         $this->call(ZonesTableSeeder::class);
         $this->call(TraductionsTableSeeder::class);
-        $this->call(TraductionsContentTableSeeder::class);
+        // $this->call(TraductionsContentTableSeeder::class);
 
         if(env('APP_ENV') != 'testing'){
             //enable foreign key check for this connection before running seeders
