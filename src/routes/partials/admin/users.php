@@ -3,7 +3,9 @@
     /**
     * Routes pour les utilisateurs
     */
-    Route::group(['prefix'=>'utilisateurs', 'middleware' => 'can:manage,App\Entities\User'], function(){
+    Route::prefix('utilisateurs')
+    ->middleware(['can:manage,App\Entities\User'])
+    ->group(function(){
         Route::get('/', 'UsersController@index');
         Route::get('/avatars', 'UsersController@avatars');
         Route::post('/', 'UsersController@store');

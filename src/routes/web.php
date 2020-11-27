@@ -15,4 +15,5 @@ Route::prefix("admin")
     ->group(function(){
         require __DIR__.'/partials/admin/traductions.php';
         require __DIR__.'/partials/admin/droits.php';
+        require __DIR__.'/partials/admin/users.php';
     });

@@ -18,24 +18,12 @@ class PotassiumPreset extends Preset
         $url = $command->ask("Quel est l'url de l'application ? (http://domaine.com:port)");
         $database = $command->ask("Quel est le nom de la base de données à créer ?");
 
-        shell_exec('cp ./vendor/kenmaclord/potassium/src/stubs/.env .');
         copy(__DIR__.'/stubs/.env', base_path('.env'));
 
         static::setEnvironmentValue('APP_NAME', $application);
         static::setEnvironmentValue('APP_URL', $url);
 
         static::setEnvironmentValue('DB_DATABASE', $database);
-        // static::setEnvironmentValue('DB_USERNAME', 'root');
-        // static::setEnvironmentValue('DB_PASSWORD', 'root');
-
-        // static::setEnvironmentValue('MAIL_HOST', 'smtp.mailtrap.io');
-        // static::setEnvironmentValue('MAIL_PORT', '2525');
-
-        // static::setEnvironmentValue('MAIL_USERNAME', 'b17cc32811a9cb');
-        // static::setEnvironmentValue('MAIL_PASSWORD', '5c66a0d83de453');
-
-        // static::setEnvironmentValue('MAIL_FROM_ADDRESS', 'info@domain.com');
-        // static::setEnvironmentValue('MAIL_FROM_NAME', '${APP_NAME}');
 
         $command->info("Fichier d'environnement prêt");
 
@@ -125,23 +113,15 @@ class PotassiumPreset extends Preset
     public static function updatePackageArray(array $packages)
     {
         return array_merge([
-            // "axios" => "^0.19.*",
             "bulma" => "^0.8.*",
-            // "cross-env" => "^7.*",
             "dropzone" => "^5.*",
-            // "laravel-mix" => "^5.*",
-            // "lodash" => "^4.*",
             "mix-tailwindcss" => "^1.*",
             "moment" => "^2.*",
             "promise-polyfill" => "8.*",
-            // "resolve-url-loader" => "^3.1.0",
-            // "sass" => "^1.26.3",
-            // "sass-loader" => "^8.0.2",
             "sortablejs" => "^1.*",
             "tailwindcss" => "^1.*",
             "velocity-animate" => "^1.*",
             "vue" => "^2.*",
-            // "vue-template-compiler" => "^2.6.*"
         ], Arr::except($packages, [
             'bootstrap',
             'bootstrap-sass',
@@ -169,10 +149,6 @@ class PotassiumPreset extends Preset
             $oldValue = static::getEnv($envKey, $str);
             $str = str_replace("{$envKey}={$oldValue}\n", "{$envKey}={$envValue}\n", $str);
         }
-        // else{
-        //     $pass = static::getEnv('DB_PASSWORD', $str);
-        //     $str = str_replace("DB_PASSWORD={$pass}\n", "DB_PASSWORD={$pass}\n{$envKey}={$envValue}\n", $str);
-        // }
 
         $fp = fopen($envFile, 'w');
         fwrite($fp, $str);

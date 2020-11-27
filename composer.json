@@ -23,6 +23,11 @@
             "src/App/Helpers/helpers.php"
         ]
     },
+    "autoload-dev": {
+        "files": [
+            "src/Tests/utilities/functions.php"
+        ]
+    },
     "extra": {
         "laravel": {
             "providers": [
