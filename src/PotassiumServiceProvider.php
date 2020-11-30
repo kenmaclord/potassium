@@ -229,7 +229,7 @@ class PotassiumServiceProvider extends ServiceProvider
 
         // Fichiers de langues
         $this->publishes([
-            base_path('/vendor/caouecs/laravel-lang/src/fr') => base_path('resources/lang/fr'),
+            base_path('/vendor/laravel-lang/lang/src/fr') => base_path('resources/lang/fr'),
             __DIR__.'/publishable/lang/en/application.php' => base_path('resources/lang/en/application.php'),
             __DIR__.'/publishable/lang/fr/application.php' => base_path('resources/lang/fr/application.php')
         ], 'lang');
