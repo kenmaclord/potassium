@@ -10,7 +10,7 @@
         Route::get('/avatars', 'UsersController@avatars');
         Route::post('/', 'UsersController@store');
         Route::put('reorder/{table}', 'UsersController@reorder');
-        Route::get('/{user}', 'UsersController@show');
+        Route::get('/{user}', 'UsersController@show')->where('user', '[0-9]+');
         Route::put('toggleLock/{user}', 'UsersController@toggleLock');
         Route::put('{user}', 'UsersController@update');
         Route::delete('/{user}', 'UsersController@destroy');

@@ -102,7 +102,7 @@ trait Uploadable
 			$this->checkMaxSize($file);
 
 			try{
-				return Storage::disk('public')->putFileAs($path, $file, $name);
+				return Storage::putFileAs($path, $file, $name);
 			}
 			catch(FileException $e){
 				throw new UploadException("Erreur lors du déplacement du fichier",ResponseCode::HTTP_INTERNAL_SERVER_ERROR);

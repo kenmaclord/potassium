@@ -1,8 +1,8 @@
 TODO
 - Unifier les couleurs
-- Utiliser les fonctions Sass pour automatiser la déclaration des variables définies dans :root
-- Gérer l'affichage des avatars dans la page profile d'un user
-- Vérifier la commande @newPage
++ Utiliser les fonctions Sass pour automatiser la déclaration des variables définies dans :root
++ Vérifier la commande @newPage
++ Gérer l'affichage des avatars dans la page profile d'un user
 + Nettoyer les commentaires inutiles
 + Vérifier les Observers
 + Css des tabs

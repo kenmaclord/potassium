@@ -1,9 +1,9 @@
 <template>
-	<div class="flash alerts">
+  <div class="flash alerts">
     <div :class="alertType">
       <div class="alert__message" v-html="inside_message"></div>
     </div>
-	</div>
+  </div>
 
 </template>
 
@@ -114,8 +114,8 @@ export default {
       padding: 15px;
       min-height:50px;
 
-      &--success{ background-color: var(--color-green-600); }
-      &--error{ background-color: var(--color-red-600); }
+      &--success{ background-color: var(--color-green-400); }
+      &--error{ background-color: var(--color-red-400); }
       &--info{ background-color: var(--color-blue-700); }
     }
   }

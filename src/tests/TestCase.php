@@ -2,14 +2,14 @@
 
 namespace Potassium\Tests;
 
-use Potassium\Database\Seeds\TestDatabaseSeeder;
-
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Artisan;
+use Potassium\Database\Seeds\TestDatabaseSeeder;
+use Potassium\Tests\utilities\TestHelpers;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, TestHelpers;
 
     /**
      * Seed certaines tables de la base de données

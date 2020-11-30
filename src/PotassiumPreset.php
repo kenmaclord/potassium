@@ -18,7 +18,7 @@ class PotassiumPreset extends Preset
         $url = $command->ask("Quel est l'url de l'application ? (http://domaine.com:port)");
         $database = $command->ask("Quel est le nom de la base de données à créer ?");
 
-        copy(__DIR__.'/stubs/.env', base_path('.env'));
+        copy(__DIR__.'/publishable/root/env.txt', base_path('.env'));
 
         static::setEnvironmentValue('APP_NAME', $application);
         static::setEnvironmentValue('APP_URL', $url);

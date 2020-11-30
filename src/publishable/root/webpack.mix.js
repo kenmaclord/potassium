@@ -7,5 +7,11 @@ mix.js('resources/js/front/front.js', 'js')
    .sass('resources/sass/front/front.scss', 'css')
    .sass('resources/sass/admin/admin.scss', 'css')
    .sass('resources/sass/auth/auth.scss', 'css')
-   .version()
+   .extract(['vue'])
    .tailwind();
+
+
+
+if (mix.inProduction()) {
+    mix.version();
+}

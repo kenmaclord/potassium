@@ -28,7 +28,7 @@ class ProcessingStrategy
 
 		$this->originalFile = $uploadedFile;
 
-		$this->img = new ImageTreatment(Storage::disk('public')->url($this->originalFile));
+		$this->img = new ImageTreatment(Storage::url($this->originalFile));
 
 		$this->sizes = $this->sizes ?? config('image.sizes');
 	}
@@ -43,7 +43,7 @@ class ProcessingStrategy
 	 */
 	public function serverUrlOf($file)
 	{
-		return Storage::disk('public')->url($this->naming->path().'/'.$file);
+		return Storage::url($this->naming->path().'/'.$file);
 	}
 
 	/**
@@ -57,7 +57,7 @@ class ProcessingStrategy
 	{
 		$fileInfos = $this->makeSizes();
 
-		Storage::disk('public')->delete($this->originalFile);
+		Storage::delete($this->originalFile);
 
 		return $fileInfos;
 	}
@@ -74,11 +74,11 @@ class ProcessingStrategy
 
 		$fullPath = $this->naming->path().'/'.$sizesRootFolder;
 
-		Storage::disk('public')->makeDirectory($fullPath);
+		Storage::makeDirectory($fullPath);
 
 		$filenames = [];
 		foreach ($this->sizes as $sizeName => $value) {
-			$img = new ImageTreatment(Storage::disk('public')->url($this->originalFile));
+			$img = new ImageTreatment(Storage::url($this->originalFile));
 
 			$img->resize([
 				"pixels"             => $value,

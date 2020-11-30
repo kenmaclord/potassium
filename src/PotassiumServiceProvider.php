@@ -137,6 +137,7 @@ class PotassiumServiceProvider extends ServiceProvider
             __DIR__.'/publishable/config/auth.php' => config_path('auth.php'),
             __DIR__.'/publishable/config/image.php' => config_path('image.php'),
             __DIR__.'/publishable/config/laravellocalization.php' => config_path('laravellocalization.php'),
+            __DIR__.'/publishable/config/filesystems.php' => config_path('filesystems.php'),
         ], 'config');
 
 
@@ -152,6 +153,7 @@ class PotassiumServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/publishable/data' => public_path('data'),
             __DIR__.'/publishable/fonts' => public_path('fonts'),
+            __DIR__.'/publishable/root/favicon.png' => public_path('favicon.png'),
             __DIR__.'/publishable/resources/js' => resource_path('js'),
             __DIR__.'/publishable/resources/sass' => resource_path('sass')
         ], 'public');

@@ -132,13 +132,13 @@ class UsersController extends Controller
 	 */
 	public function avatars()
 	{
-		$genres = Storage::disk('local')->directories('/data/app/avatars');
+		$genres = Storage::directories('/data/app/avatars');
 
 		$avatars=[];
 
 		foreach($genres as $genre)
 		{
-			$files = Storage::disk('local')->allFiles($genre);
+			$files = Storage::allFiles($genre);
 
 			foreach($files as $index=>$file){
 				$files[$index] = "/".$file;

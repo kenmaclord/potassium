@@ -43,24 +43,28 @@ class NewPageCommand extends Command
      */
     public function handle()
     {
-        $this->page = $this->argument('page');
-        $model = $this->option('model');
+        $this->page = strtolower($this->argument('page'));
+        $model = $this->getModelName($this->option('model'));
 
-        if (is_null($model)) {
-            $model = ucwords(substr($this->page, 0, strlen($this->page) -1));
-        }
 
-        $this->modelFile = ucwords($model).".php";
-        $this->model = "\App\Entities\\".ucwords($model);
-        $this->modelForController = "App\\Entities\\\\".ucwords($model);
+        $this->modelFile = "{$model}.php";
+        $this->modelFullPath = "\App\Entities\\{$model}";
+        $this->modelForController = "App\\Entities\\{$model}";
 
+
+        $this->makeModel();
         $this->makeView();
         $this->makeJs();
         $this->makeCss();
-        $this->sidebar();
-        $this->routes();
-        $this->controller();
-        $this->model();
+        $this->updateSidebar();
+        $this->updateRoutes();
+        $this->makeController();
+    }
+
+
+    public function getModelName($option)
+    {
+        return is_null($option) ? ucwords($this->page) : ucwords(strtolower($option));
     }
 
 
@@ -71,7 +75,7 @@ class NewPageCommand extends Command
     {
         tap(resource_path("views/admin/pages/{$this->page}"), function ($folder){
             if(!File::exists($folder)){
-                File::makeDirectory($folder);
+                File::makeDirectory($folder, 0755, true);
                 $view = $folder."/index.blade.php";
                 File::copy(base_path("/vendor/kenmaclord/potassium/src/stubs/pages/index.blade.php"), $view);
                 file_put_contents($view,str_replace('@page',$this->page,file_get_contents($view)));
@@ -123,11 +127,11 @@ class NewPageCommand extends Command
     /**
      * Sidebar
      */
-    public function sidebar()
+    public function updateSidebar()
     {
         $sidebar = resource_path("views/admin/app/sidebar.blade.php");
         $placeholder = "{{-- @page --}}";
-        $template = "<li><a href='/admin/{$this->page}'>{$this->page}</a></li>\n\n\t\t{$placeholder}";
+        $template = "@can('manage', [App\Entities\User::class, 'users'])\n\t\t\t<li><a href='/admin/{$this->page}'>".ucwords($this->page)."</a></li>\n\t\t@endcan\n\n\t\t{$placeholder}";
 
         $this->replace($sidebar, $placeholder, $template);
     }
@@ -136,16 +140,16 @@ class NewPageCommand extends Command
     /**
      * Routes
      */
-    public function routes()
+    public function updateRoutes()
     {
-        $routes = base_path("routes/web.php");
+        $routes = base_path("routes/admin.php");
         $placeholder = "// @PageRoutes";
-        $template = "/**\n\t* Routes pour les ".ucwords($this->page)."\n\t*/\n\tRoute::group(['prefix'=>'{$this->page}', 'middleware' => 'can:manage,App\Entities\User'], function(){\n\t\tRoute::get('/', '".ucwords($this->page)."Controller@index');\n\t});\n\n\t{$placeholder}";
+        $template = "\t\t/**\n\t\t* Routes pour les ".ucwords($this->page)."\n\t\t*/\n\t\tRoute::group(['prefix'=>'{$this->page}', 'middleware' => 'can:manage,App\Entities\User'], function(){\n\t\t\tRoute::get('/', '".ucwords($this->page)."Controller@index');\n\t\t});\n\n{$placeholder}";
 
         $this->replace($routes, $placeholder, $template);
     }
 
-    public function controller()
+    public function makeController()
     {
         $controller_name = ucwords($this->page)."Controller";
 
@@ -158,13 +162,13 @@ class NewPageCommand extends Command
         $this->replace($controller, $placeholder, $template);
     }
 
-    public function model()
+    public function makeModel()
     {
         if (File::exists(base_path("app/Entities/{$this->modelFile}"))) {
             unlink(base_path("app/Entities/{$this->modelFile}"));
         }
 
-        Artisan::call("make:model", ["name" => $this->model, "-m"=> true, "-f"=>true]);
+        Artisan::call("make:model", ["name" => $this->modelFullPath, "-m"=> true, "-f"=>true]);
     }
 
 

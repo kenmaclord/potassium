@@ -9,6 +9,8 @@
             <meta id="token" name="csrf-token" content="{{ csrf_token() }}">
             <meta name="api_token" content="Bearer {{ (Auth::user()) ? Auth::user()->api_token : '' }}">
 
+            <link rel="icon" type="image/png" href="{{asset('/favicon.png')}}" />
+
             <title>@yield('title', "Backoffice")</title>
 
             <link rel="stylesheet" href="{{ mix('/css/admin.css')}}">
@@ -39,6 +41,8 @@
         </div>
 
         <!-- Scripts -->
-        <script src="{{mix('/js/admin.js')}}"></script>
+        <script src="{{ mix('/js/manifest.js') }}"></script>
+        <script src="{{ mix('/js/vendor.js') }}"></script>
+        <script src="{{ mix('/js/admin.js') }}"></script>
     </body>
 </html>
