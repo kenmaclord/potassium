@@ -1,13 +1,8 @@
 {
     "name": "kenmaclord/potassium",
     "description": "Simple admin for my projects",
-    "type": "project",
-    "require": {
-        "laravel/ui":"^2.4",
-        "intervention/image": "^2.5",
-        "mcamara/laravel-localization": "^1.5",
-        "laravel-lang/lang":"~7.0"
-    },
+    "keywords": ["laravel", "php", "admin", "vuejs"],
+    "homepage": "https://github.com/kenmaclord/potassium",
     "license": "MIT",
     "authors": [
         {
@@ -15,6 +10,16 @@
             "email": "karl.morisset.register@gmail.com"
         }
     ],
+    "require": {
+        "php": ">=7.2.5",
+        "laravel/framework": "^7.0||^8.0",
+        "intervention/image": "^2.5",
+        "mcamara/laravel-localization": "^1.5",
+    },
+    "require-dev": {
+        "laravel/ui":"^2.4",
+        "laravel-lang/lang":"~7.0   "
+    },
     "autoload": {
         "psr-4": {
             "Potassium\\": "src"
