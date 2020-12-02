@@ -113,18 +113,18 @@ class PotassiumPreset extends Preset
     public static function updatePackageArray(array $packages)
     {
         return array_merge([
-            "autoprefixer": "^10.0.4",
-            "bulma": "^0.9.1",
-            "dropzone": "^5.7.2",
-            "mix-tailwindcss": "^1.2.0",
-            "moment": "^2.29.1",
-            "normalize.css": "^8.0.1",
-            "postcss": "^8.1.10",
-            "promise-polyfill": "^8.2.0",
-            "sortablejs": "^1.12.0",
-            "tailwindcss": "^2.0.1",
-            "velocity-animate": "^1.5.2",
-            "vue": "^2.6.12"
+            "autoprefixer" => "^10.0.4",
+            "bulma" => "^0.9.1",
+            "dropzone" => "^5.7.2",
+            "mix-tailwindcss" => "^1.2.0",
+            "moment" => "^2.29.1",
+            "normalize.css" => "^8.0.1",
+            "postcss" => "^8.1.10",
+            "promise-polyfill" => "^8.2.0",
+            "sortablejs" => "^1.12.0",
+            "tailwindcss" => "^2.0.1",
+            "velocity-animate" => "^1.5.2",
+            "vue" => "^2.6.12"
         ], Arr::except($packages, [
             'bootstrap',
             'bootstrap-sass',
