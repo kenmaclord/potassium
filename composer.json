@@ -2,6 +2,7 @@
     "name": "kenmaclord/potassium",
     "description": "Simple admin for my projects",
     "keywords": ["laravel", "php", "admin", "vuejs"],
+    "type":"project",
     "homepage": "https://github.com/kenmaclord/potassium",
     "license": "MIT",
     "authors": [
@@ -11,11 +12,11 @@
         }
     ],
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.3.0",
         "laravel/framework": "^7.0||^8.0",
         "intervention/image": "^2.5",
         "mcamara/laravel-localization": "^1.5",
-        "laravel/ui":"^2.4",
+        "laravel/ui":"^2.4||^3.0",
         "laravel-lang/lang":"~7.0"
     },
     "autoload": {

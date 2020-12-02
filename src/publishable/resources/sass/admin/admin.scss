@@ -5,8 +5,8 @@
 @import "../core/font-mixin";
 @import "../core/tailwind";
 
-@import "./core/typo";
 @import "./core/variables";
+@import "./core/typo";
 
 @import "./core/common";
 
@@ -28,5 +28,7 @@
 @import "pages/langues";
 @import "pages/traductions";
 @import "pages/profile";
+
+@import "pages/promotions";
 
 //@newCss

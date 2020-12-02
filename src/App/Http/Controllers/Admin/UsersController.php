@@ -101,7 +101,7 @@ class UsersController extends Controller
 			]);
 
 			$status = "activé";
-			if(request('locked')){ $status = "vérouillé"; }
+			if(request('locked')){ $status = "verrouillé"; }
 
 			return $this->respond(sprintf("%s %s %s", 'Compte de', $user->fullname, $status));
 		}

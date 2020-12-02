@@ -8,6 +8,7 @@ mix.js('resources/js/front/front.js', 'js')
    .sass('resources/sass/admin/admin.scss', 'css')
    .sass('resources/sass/auth/auth.scss', 'css')
    .extract(['vue'])
+   //.browserSync("domain.test")
    .tailwind();
 
 

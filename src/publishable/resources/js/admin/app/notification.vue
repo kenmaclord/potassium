@@ -114,9 +114,9 @@ export default {
       padding: 15px;
       min-height:50px;
 
-      &--success{ background-color: var(--color-green-400); }
-      &--error{ background-color: var(--color-red-400); }
-      &--info{ background-color: var(--color-blue-700); }
+      &--success{ background-color: var(--color-green-500); }
+      &--error{ background-color: var(--color-red-500); }
+      &--info{ background-color: var(--color-light-blue-400); }
     }
   }
 
