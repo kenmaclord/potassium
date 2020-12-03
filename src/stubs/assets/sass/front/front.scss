@@ -1,0 +1,25 @@
+    /* Initialisation de l'application */
+@import "app/variables";
+@import "node_modules/bulma/bulma";
+@import "../core/font-awesome/font-awesome.scss";
+@import "../core/font-mixin";
+@import "../core/tailwind";
+@import "app/typo";
+
+
+/*
+|--------------------------------------------------------------------------
+| Styles communs
+|--------------------------------------------------------------------------
+*/
+@import "app/app";
+@import "app/header";
+@import "app/footer";
+
+
+/*
+|--------------------------------------------------------------------------
+| Styles spécifiques aux pages
+|--------------------------------------------------------------------------
+*/
+@import "pages/home";

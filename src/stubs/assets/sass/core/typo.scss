@@ -1,0 +1,49 @@
+// Fonts
+@import "./font-mixin";
+@import "./variables";
+
+/*
+|--------------------------------------------------------------------------
+| Ajoute les déclaration des polices
+|--------------------------------------------------------------------------
+|
+*/
+@font-face{ @include font-face(Lato-Regular);}
+@font-face{ @include font-face(Lato-Italic);}
+@font-face{ @include font-face(Lato-Bold);}
+@font-face{ @include font-face(Lato-BoldItalic);}
+
+
+/*
+|--------------------------------------------------------------------------
+| Définition des styles typographiques de bases
+|--------------------------------------------------------------------------
+|
+*/
+.regular{
+    font-family: "Lato-Bold", "Arial", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    color: $black;
+}
+
+.italic{
+    font-family: "Lato-Italic", "Arial", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    color: $black;
+}
+
+.bold{
+    font-family: "Lato-Bold", "Arial bold", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    color: $black;
+}
+
+.bold-italic{
+    font-family: "Lato-BoldItalic", "Arial bold", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    color: $black;
+}

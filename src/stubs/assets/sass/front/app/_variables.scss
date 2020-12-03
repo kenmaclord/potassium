@@ -1,0 +1,62 @@
+// Body
+$body-bg: #F0F0F0;
+
+$ease: cubic-bezier(.76,0,.17,1);
+
+$black: #000;
+$disabled: #888;
+$white: #FFF;
+$dark-blue:	#0D1923;
+
+$header-desktop-height: 70px;
+$header-mobile-height: 50px;
+
+$footer-max-width: 1320px;
+
+// The container horizontal gap, which acts as the offset for breakpoints
+$gap: 20px !default
+
+$phone: 480px !default
+// 960, 1152, and 1344 have been chosen because they are divisible by both 12 and 16
+$tablet: 769px !default
+// 960px container + 3rem
+$desktop: 1024px + (2 * $gap) !default
+// 1152px container + 3rem
+$widescreen: 1152px + (2 * $gap)  !default
+// 1344px container + 3rem
+$fullhd: 1600px + (2 * $gap)  !default
+
+// Borders
+$laravel-border-color: darken($body-bg, 10%);
+$list-group-border: $laravel-border-color;
+$navbar-default-border: $laravel-border-color;
+$panel-default-border: $laravel-border-color;
+$panel-inner-border: $laravel-border-color;
+
+// Brands
+$brand-primary: #3097D1;
+$brand-info: #8eb4cb;
+$brand-success: #2ab27b;
+$brand-warning: #cbb956;
+$brand-danger: #bf5329;
+
+// Typography
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+$font-family-sans-serif: "Raleway", sans-serif;
+$font-size-base: 14px;
+$line-height-base: 1.6;
+$text-color: #636b6f;
+
+// Navbar
+$navbar-default-bg: #fff;
+
+// Buttons
+$btn-default-color: $text-color;
+
+// Inputs
+$input-border: lighten($text-color, 40%);
+$input-border-focus: lighten($brand-primary, 25%);
+$input-color-placeholder: lighten($text-color, 30%);
+
+// Panels
+$panel-default-heading-bg: #fff;

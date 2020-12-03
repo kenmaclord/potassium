@@ -1,9 +1,7 @@
 {
     "name": "kenmaclord/potassium",
-    "description": "Simple admin for my projects",
-    "keywords": ["laravel", "php", "admin", "vuejs"],
-    "type":"project",
-    "homepage": "https://github.com/kenmaclord/potassium",
+    "description": "A base admin preset",
+    "keywords": ["preset", "admin interface"],
     "license": "MIT",
     "authors": [
         {
@@ -11,31 +9,15 @@
             "email": "karl.morisset.register@gmail.com"
         }
     ],
-    "require": {
-        "php": ">=7.2.5",
-        "laravel/framework": "^7.*",
-        "intervention/image": "^2.5",
-        "mcamara/laravel-localization": "^1.5",
-        "laravel/ui":"^2.4",
-        "laravel-lang/lang":"~7.0"
-    },
     "autoload": {
         "psr-4": {
-            "Potassium\\": "src"
-        },
-        "files": [
-            "src/App/Helpers/helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "files": [
-            "src/Tests/utilities/functions.php"
-        ]
+            "Potassium\\Preset\\": "src"
+        }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Potassium\\PotassiumServiceProvider"
+                "Potassium\\Preset\\PotassiumServiceProvider"
             ]
         }
     }

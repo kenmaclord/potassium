@@ -1,0 +1,30 @@
+#traductions-content{
+
+	/** Style du bandeau de titre avec le dropdown de choix de la langue */
+	&>.content{
+		display: flex;
+		justify-content: space-between;
+
+		h1{
+			flex: 1;
+		}
+	}
+
+	.control{
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-start;
+		min-width: 300px;
+		margin-top: 5px;
+
+		.label{
+			margin-top: 4px;
+			margin-right: 15px;
+		}
+	}
+
+	.zones{
+		margin-top: 25px;
+	}
+}

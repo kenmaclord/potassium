@@ -1,0 +1,44 @@
+#langues{
+  .langue{
+    &:nth-child(even){
+      background-color: $grey-lighter;
+    }
+  }
+
+  .field{
+    width: 20%;
+
+    &.head{
+      font-weight: bold;
+    }
+
+    &.available:not(.head), &.visible:not(.head){
+      cursor: pointer;
+    }
+  }
+
+  .desktop{
+    display: inline;
+  }
+
+  .phone{
+    display: none;
+  }
+}
+
+// Petits périphériques
+@media screen and (max-width: 550px){
+  #langues{
+    .field.traduction{
+      display: none;
+    }
+
+    .desktop{
+      display: none;
+    }
+
+    .phone{
+      display: inline;
+    }
+  }
+}

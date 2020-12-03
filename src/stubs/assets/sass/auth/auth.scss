@@ -1,0 +1,80 @@
+/* Initialisation de l'application */
+@import "../core/reset";
+@import "../core/variables";
+@import "../core/core";
+@import "../core/typo";
+
+
+html, body{
+  min-height: 100%;
+  height: 100%;
+}
+
+html{
+  padding: 10px;
+}
+
+body{
+  display: flex;
+  @extend .regular;
+}
+
+.label:not(:last-child) {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+.container{
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+#auth{
+  .logo{
+    h1{
+      font-size: 2rem;
+      background-color: lighten($color1, 20);
+      text-align: center;
+      border-radius: 5px;
+      color: $white;
+    }
+  }
+}
+
+.loginForm{
+  border: 1px solid lighten($color1, 20);
+  border-radius: 4px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+
+.submit{
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+
+  span{
+    width: 100%;
+  }
+}
+
+a{
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+.forgot{
+  width: 100%;
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.sent{
+  margin-top: 30px;
+}

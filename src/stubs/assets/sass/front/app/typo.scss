@@ -1,0 +1,78 @@
+/*
+|--------------------------------------------------------------------------
+| Ajoute les déclaration des polices
+|--------------------------------------------------------------------------
+|
+*/
+// @font-face{ @include font-face(absara-thin);}
+// @font-face{ @include font-face(absara-thin-italic);}
+// @font-face{ @include font-face(absara-regular);}
+// @font-face{ @include font-face(absara-italic);}
+// @font-face{ @include font-face(absara-bold);}
+// @font-face{ @include font-face(absara-bold-italic);}
+
+
+/*
+|--------------------------------------------------------------------------
+| Définition des styles typographiques de bases
+|--------------------------------------------------------------------------
+|
+*/
+
+/*
+|-----------------
+| Police Absara
+|-----------------
+*/
+.thin{
+    font-family: "absara-thin", "Arial", sans-serif;
+    @extend %reset-font;
+}
+
+.thin-italic{
+    font-family: "absara-thin-italic", "Arial", sans-serif;
+    @extend %reset-font;
+}
+
+.regular{
+    font-family: "absara-regular", "Arial", sans-serif;
+    @extend %reset-font;
+}
+
+.italic{
+    font-family: "absara-italic", "Arial italic", sans-serif;
+    @extend %reset-font;
+}
+
+.bold{
+    font-family: "absara-bold", "Arial bold", sans-serif;
+    @extend %reset-font;
+}
+
+.bold-italic{
+    font-family: "absara-bold-italic", "Arial bold", sans-serif;
+    @extend %reset-font;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Styles partagés
+|--------------------------------------------------------------------------
+*/
+.black{
+    color: $black;
+}
+
+.white{
+    color: $white;
+}
+
+.cap{
+    text-transform: uppercase;
+}
+
+%reset-font{
+    font-weight: normal;
+    font-style: normal;
+}
+
